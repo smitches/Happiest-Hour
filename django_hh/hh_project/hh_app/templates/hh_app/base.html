@@ -1,0 +1,13 @@
+{% load static %}
+
+<h1>
+	This is our header from base
+</h1>
+
+<div>
+	{% block content %}
+	<h1>
+		You should not see this
+	</h1>
+	{% endblock %}
+</div>
