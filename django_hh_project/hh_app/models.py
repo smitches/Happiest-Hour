@@ -1,17 +1,14 @@
 from django.core.validators import RegexValidator
 from django.db import models
 
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Region(models.Model):
 	region_name = models.CharField(max_length = 100)
 	def __str__(self):
 		return str(self.region_name)
-
-class User(models.Model):
-	user_name = models.CharField(max_length = 100)
-	admin = models.BooleanField(default = False)
-	#we need to add more fields to this class
 
 class Feature(models.Model):
 	feature_title = models.CharField(max_length = 100)
