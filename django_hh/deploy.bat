@@ -1,1 +1,0 @@
-gcloud --project happierhour app deploy
