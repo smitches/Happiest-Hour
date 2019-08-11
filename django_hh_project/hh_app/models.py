@@ -43,6 +43,7 @@ class Reviews(models.Model):
 	reviewer = models.ForeignKey(User, on_delete = models.CASCADE)
 	bar = models.ForeignKey(Bar, on_delete = models.CASCADE)
 	star_count = models.IntegerField()
+	review_text = models.TextField(null=True, blank=True)
 	def __str__(self):
 		return str(self.reviewer.username) + ': ' + str(self.bar) + ' - ' + str(self.star_count) + ' stars'
 

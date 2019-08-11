@@ -168,3 +168,7 @@ USE_TZ = True
 #Added only Static Root
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
+
+
+LOGIN_REDIRECT_URL = 'hh_app:hh_home'
+LOGIN_URL = 'hh_app:login'
