@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import *
+from django.http import *
 from django.views import generic
 from .models import *
 from .forms import *
@@ -22,20 +23,41 @@ class RegionDetail(generic.DetailView):
 # @login_required()
 def create_bar(request):
 	if request.method == 'POST':
-		bar = Bar(manager=request.user, approved=False)
-		form = CreateBarForm(request.POST, instance=bar)
+		form = CreateBarForm(request.POST)
 
 		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/thanks/')
+			bar = form.save(commit=False)
+			bar.manager = request.user
+			bar.approved = False
+			bar.save()
+			return render(request = request,
+				  template_name = "hh_app/thanks.html")
 
 	else:
 		form = CreateBarForm()
 
-	return render(request, 'hh_app/create_bar.html', {'form': form})
+	return render(request, 'hh_app/create.html', {'form': form})
 
-def created(request):
-	return render(request, 'hh_app/thanks.html')
+def create_happy_hour(request, bar_id):
+	if request.method == 'POST':
+		form = CreateHappyHour(request.POST)
+
+		if form.is_valid():
+			try:
+				bar = Bar.objects.get(id=bar_id)
+			except ObjectDoesNotExist:
+				pass
+			for day in form.cleaned_data['weekdays']:
+				hh = form.save(commit=False)
+				hh.day_of_week = day
+				hh.bar = bar
+			return render(request = request,
+				  template_name = "hh_app/thanks.html")
+
+	else:
+		form = CreateHappyHour()
+
+	return render(request, 'hh_app/create.html', {'form': form})
 
 
 

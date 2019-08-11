@@ -1,8 +1,12 @@
 from .models import *
 from django.forms import ModelForm
+from django import forms
 
 
 class CreateBarForm(ModelForm): 
+
+
+
 	class Meta: 
 		model = Bar
 		exclude = ['manager','approved']
@@ -17,7 +21,10 @@ class CreateBarForm(ModelForm):
 
 
 class CreateHappyHour(ModelForm):
+	days = [("M", "Monday"), ("T", "Tuesday"),("W", "Wednesday"),("Th", "Thursday"),("F", "Friday")]
+	weekdays = forms.MultipleChoiceField(label='Days of the Week', choices=days)
+
 	class Meta: 
 		model = HappyHour
-		fields = '__all__'
+		exclude = ['day_of_week', 'bar']
 
