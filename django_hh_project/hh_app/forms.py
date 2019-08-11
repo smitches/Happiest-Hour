@@ -1,6 +1,30 @@
+<<<<<<< HEAD
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
+
+class CreateBarForm(forms.ModelForm): 
+
+    class Meta: 
+        model = Bar
+        exclude = ['manager','approved']
+
+'''class CreateBarForm(forms.Form):
+    bar_name = forms.CharField(label='Bar Name', max_length=100)
+    street_address = forms.CharField(label='Street Address', max_length=100)
+    phone_number = forms.CharField(label='Phone Number', max_length=17, validators=[RegexValidator(r'^\+?1?\d{9,15}$', "Phone number must be entered in the format: '+9999999999'.")])
+    region = forms.ModelChoiceField(label='Region', queryset=Region.objects.all(), to_field_name="region_name")
+    features = forms.ModelMultipleChoiceField(label='Features', required=False, queryset=Feature.objects.all(), to_field_name="feature_title")'''
+
+class CreateHappyHour(forms.ModelForm):
+    days = [("M", "Monday"), ("T", "Tuesday"),("W", "Wednesday"),("Th", "Thursday"),("F", "Friday")]
+    weekdays = forms.MultipleChoiceField(label='Days of the Week', choices=days)
+
+    class Meta: 
+        model = HappyHour
+
+        exclude = ['day_of_week', 'bar']
 
 class UniqueUserEmailField(forms.EmailField):
     #An EmailField which only is valid if no User has that email.
@@ -65,5 +89,3 @@ DAY_CHOICES = (
 
 # class HHFilterForm(forms.Form):
 #     day = forms.CharField(max_length=2, choices=DAY_CHOICES, null=True, blank=True)
-
-

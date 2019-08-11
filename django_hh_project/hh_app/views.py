@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import *
+from django.http import *
 from django.views import generic
 from .models import *
+from .forms import *
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
@@ -54,6 +57,7 @@ class RegionDetail(generic.DetailView):
 	model = Region
 	template_name = 'hh_app/region_detail.html'
 
+<<<<<<< HEAD
 class RegionUpdate():
 	pass #Not Necessary: will only be edited by admin in dashboard
 
@@ -100,3 +104,49 @@ class ReviewCreate(LoginRequiredMixin,generic.CreateView):
 	def form_valid(self,form):
 		form.instance.reviewer = self.request.user
 		return super().form_valid(form)
+=======
+# @login_required()
+def create_bar(request):
+	if request.method == 'POST':
+		form = CreateBarForm(request.POST)
+
+		if form.is_valid():
+			bar = form.save(commit=False)
+			bar.manager = request.user
+			bar.approved = False
+			bar.save()
+			return render(request = request,
+				  template_name = "hh_app/thanks.html")
+
+	else:
+		form = CreateBarForm()
+
+	return render(request, 'hh_app/create.html', {'form': form})
+
+def create_happy_hour(request, bar_id):
+	if request.method == 'POST':
+		form = CreateHappyHour(request.POST)
+
+		if form.is_valid():
+			try:
+				bar = Bar.objects.get(id=bar_id)
+			except ObjectDoesNotExist:
+				pass
+			for day in form.cleaned_data['weekdays']:
+				hh = form.save(commit=False)
+				hh.day_of_week = day
+				hh.bar = bar
+			return render(request = request,
+				  template_name = "hh_app/thanks.html")
+
+	else:
+		form = CreateHappyHour()
+
+	return render(request, 'hh_app/create.html', {'form': form})
+
+
+
+
+
+
+>>>>>>> 9b9ca3036d8f8ef409c9a0e94e977f9ae9df2a94

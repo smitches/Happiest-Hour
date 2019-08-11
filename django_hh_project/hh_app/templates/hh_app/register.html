@@ -2,7 +2,7 @@
 
 {%block content%}
 
-<form action="{%url 'hh_app:hh_register'%}" method="post">
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit">
