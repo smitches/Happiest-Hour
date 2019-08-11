@@ -170,5 +170,5 @@ STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
 
-LOGIN_REDIRECT_URL = 'hh_app:hh_home'
+LOGIN_REDIRECT_URL = 'hh_app:home'
 LOGIN_URL = 'hh_app:login'

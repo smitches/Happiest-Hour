@@ -24,7 +24,7 @@ class Bar(models.Model):
 	manager = models.ForeignKey(User, on_delete = models.CASCADE)
 	approved = models.BooleanField(default = False)
 	region = models.ForeignKey(Region, on_delete = models.CASCADE)
-	features = models.ManyToManyField(Feature, null=True, blank=True)
+	features = models.ManyToManyField(Feature, blank=True)
 	def __str__(self):
 		return str(self.bar_name) + ' ' + str(self.street_address)
 

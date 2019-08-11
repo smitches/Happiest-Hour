@@ -45,7 +45,7 @@ def account(request):
 			u_form.save()
 			username=form.cleaned_data.get('username')
 			messages.success(request, f'{username}, your account has been updated!')
-			return redirect(reverse('hh_app:hh_home'))
+			return redirect(reverse('hh_app:home'))
 	else:
 		u_form = UserUpdateForm(instance=request.user)
 	context = {
@@ -57,7 +57,6 @@ class RegionDetail(generic.DetailView):
 	model = Region
 	template_name = 'hh_app/region_detail.html'
 
-<<<<<<< HEAD
 class RegionUpdate():
 	pass #Not Necessary: will only be edited by admin in dashboard
 
@@ -70,7 +69,7 @@ class BarUpdate(UserPassesTestMixin, generic.UpdateView):
 	model = Bar
 	template_name = 'hh_app/bar_update.html'
 	fields = ['bar_name','street_address','phone_number','region','features']
-
+	success_url = reverse_lazy('hh_app:home')
 	def test_func(self):
 		bar_id = self.kwargs.get('pk')
 		bar = Bar.objects.get(id=bar_id)
@@ -79,9 +78,9 @@ class BarUpdate(UserPassesTestMixin, generic.UpdateView):
 class HHUpdate(UserPassesTestMixin,generic.UpdateView):
 	#only bar manager can update
 	model = HappyHour
-	template_name = 'hh_app/hh_update.html'
+	template_name = 'hh_app/update_hh.html'
 	fields = ['start_time','end_time','drinks','food','menu_pdf']
-
+	success_url = reverse_lazy('hh_app:home')
 	def test_func(self):
 		hh_id = self.kwargs.get('pk')
 		hh = HappyHour.objects.get(id=hh_id)
@@ -91,7 +90,7 @@ class ReviewUpdate(UserPassesTestMixin, generic.UpdateView):
 	model = Reviews
 	template_name = 'hh_app/review_update.html'
 	fields = ['star_count','review_text']
-	success_url = reverse_lazy('hh_app:hh_home')
+	success_url = reverse_lazy('hh_app:home')
 	def test_func(self): #The test to see if user is creator of review
 		review_id = self.kwargs.get('pk')
 		review = Reviews.objects.get(id=review_id)
@@ -101,10 +100,12 @@ class ReviewCreate(LoginRequiredMixin,generic.CreateView):
 	model = Reviews
 	fields = ['bar','star_count','review_text']
 	template_name = 'hh_app/review_create.html'
+	success_url = reverse_lazy('hh_app:home')
 	def form_valid(self,form):
 		form.instance.reviewer = self.request.user
 		return super().form_valid(form)
-=======
+
+
 # @login_required()
 def create_bar(request):
 	if request.method == 'POST':
@@ -136,6 +137,7 @@ def create_happy_hour(request, bar_id):
 				hh = form.save(commit=False)
 				hh.day_of_week = day
 				hh.bar = bar
+				#TODO: don;t you need to commit it now?
 			return render(request = request,
 				  template_name = "hh_app/thanks.html")
 
@@ -144,9 +146,15 @@ def create_happy_hour(request, bar_id):
 
 	return render(request, 'hh_app/create.html', {'form': form})
 
-
-
-
-
-
->>>>>>> 9b9ca3036d8f8ef409c9a0e94e977f9ae9df2a94
+def search_hhs(request):
+	if request.method == 'POST':
+		form = HHFilterForm(request.POST)
+		if form.is_valid():
+			a = form.cleaned_data['day']
+			b = form.cleaned_data['day']
+			c = form.cleaned_data['day']
+			d = form.cleaned_data['day']
+			raise Exception
+	else:
+		form = HHFilterForm()
+	return render(request,'hh_app/filter.html',{'form':form})

@@ -13,6 +13,7 @@ urlpatterns = [
 	path('reviews/create/',ReviewCreate.as_view(),name='create_review'),
 	path('bars/<int:pk>/update/',BarUpdate.as_view(), name='update_bar'),
 	path('happy_hours/<int:pk>/update/',HHUpdate.as_view(), name='update_hh'),
+	path('search/', search_hhs ,name='search'),
 	path('register/',register,name='register'),
 	path('account/',account, name='account'),
 	path('logout/', auth_views.LogoutView.as_view(template_name='hh_app/logout.html'), name='logout'),

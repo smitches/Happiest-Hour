@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import *
 
 
 class CreateBarForm(forms.ModelForm): 
@@ -87,5 +87,10 @@ DAY_CHOICES = (
         ('Su','Sunday'),
     )
 
-# class HHFilterForm(forms.Form):
-#     day = forms.CharField(max_length=2, choices=DAY_CHOICES, null=True, blank=True)
+class HHFilterForm(forms.Form):
+    day = forms.ChoiceField(choices=DAY_CHOICES, required=False)
+    region = forms.ModelChoiceField(required=False ,queryset=Region.objects.all(), to_field_name="region_name")
+    #time
+    features = forms.ModelMultipleChoiceField(required=False, queryset=Feature.objects.all(), to_field_name="feature_title")
+    star_count = forms.IntegerField(label="Min Ave Star Count",max_value = 5, min_value = 0, required=False)
+    
