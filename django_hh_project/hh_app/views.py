@@ -122,7 +122,7 @@ def create_bar(request):
 	else:
 		form = CreateBarForm()
 
-	return render(request, 'hh_app/create.html', {'form': form})
+	return render(request, 'hh_app/bar_create.html', {'form': form})
 
 def create_happy_hour(request, bar_id):
 	if request.method == 'POST':
@@ -133,18 +133,19 @@ def create_happy_hour(request, bar_id):
 				bar = Bar.objects.get(id=bar_id)
 			except ObjectDoesNotExist:
 				pass
+
 			for day in form.cleaned_data['weekdays']:
-				hh = form.save(commit=False)
-				hh.day_of_week = day
-				hh.bar = bar
-				#TODO: don;t you need to commit it now?
+				hh = HappyHour(day_of_week=day, bar = bar)
+				form = CreateHappyHour(request.POST, instance=hh)
+				form.save()
+
 			return render(request = request,
 				  template_name = "hh_app/thanks.html")
 
 	else:
 		form = CreateHappyHour()
 
-	return render(request, 'hh_app/create.html', {'form': form})
+	return render(request, 'hh_app/hh_create.html', {'form': form})
 
 def search_hhs(request):
 	if request.method == 'POST':
@@ -158,3 +159,10 @@ def search_hhs(request):
 	else:
 		form = HHFilterForm()
 	return render(request,'hh_app/filter.html',{'form':form})
+
+def display_bars(request):
+	return render(request, 'hh_app/display_bars.html', {'bars': request.user.bar_set.all()})
+
+def display_bars_happyhours(request, bar_id):
+	bar_obj = Bar.objects.get(id=bar_id)
+	return render(request, 'hh_app/display_hhs.html', {'bar': bar_obj, 'hhs': bar_obj.happyhour_set.all()})

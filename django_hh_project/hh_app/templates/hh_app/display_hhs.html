@@ -1,0 +1,35 @@
+{%extends 'hh_app/base.html'%}
+
+{% block content %}
+<h3>{{bar.bar_name}}'s Happy Hours</h3></br>
+<table class='table'>
+	<tr>
+	  <th>Day of the Week</th>
+	  <th>Time</th>
+	  <th>Drinks Discounted?</th>
+	  <th>Food Discounted?</th>
+	  <th>Menu Link</th>
+	  <th>Update</th>
+	  <th>Delete</th>
+	</tr>
+	{% for h in hhs %}
+	<tr>
+	  <td>{{ h.day_of_week}}</td>
+	  <td>{{ h.start_time }} - {{ h.end_time }}</td>
+	  <td>{{ h.drinks}}</td>
+	  <td>{{ h.food}}</td>
+	  <td>{{ h.menu_pdf}}</td>
+     <td>
+	  		<form action="{% url 'hh_app:update_hh' h.id%}">
+                <input type="submit" value="Update"/>
+          	</form>
+     </td>
+     <td>
+	  		<form action="#">
+                <input type="submit" value="Delete"/>
+          	</form>
+     </td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

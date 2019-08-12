@@ -1,0 +1,45 @@
+{%extends 'hh_app/base.html'%}
+
+{% block content %}
+<h3>My Bars</h3></br>
+<table class='table'>
+	<tr>
+	  <th>Bar</th>
+	  <th>Street Address</th>
+	  <th>Phone Number</th>
+	  <th>Region</th>
+	  <th>Add Happy Hours</th>
+	  <th>View Happy Hours</th>
+	  <th>Update</th>
+	  <th>Delete</th>
+	</tr>
+	{% for b in bars %}
+	<tr>
+	  <td>{{ b.bar_name }}</td>
+	  <td>{{ b.street_address }}</td>
+	  <td>{{ b.phone_number }}</td>
+	  <td>{{ b.region}}</td>
+	  <td>
+	  		<form action="{% url 'hh_app:hh_form' b.id%}">
+                <input type="submit" value="Add"/>
+          	</form>
+     </td>
+     <td>
+	  		<form action="{% url 'hh_app:bar_hhs' b.id%}">
+                <input type="submit" value="View"/>
+          	</form>
+     </td>
+     <td>
+	  		<form action="{% url 'hh_app:update_bar' b.id%}">
+                <input type="submit" value="Update"/>
+          	</form>
+     </td>
+     <td>
+	  		<form action="#">
+                <input type="submit" value="Delete"/>
+          	</form>
+     </td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

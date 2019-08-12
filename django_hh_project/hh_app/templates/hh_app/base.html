@@ -18,11 +18,12 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'hh_app:search' %}">Find a Happy Hour</a>
       </li>
-      {% if user.bar_set|length %}
+      {% if user.bar_set.all|length %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Manage Bars</a>
+          <a class="nav-link" href="{% url 'hh_app:mybars' %}">Manage Bars</a>
         </li>
-      {% else %}
+      {% endif %}
+      {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'hh_app:bar_form' %}">Add your Bar</a>
         </li>
@@ -43,7 +44,7 @@
   </div>
 </nav>
 
-<div>
+<div class="ourcontent">
   {% block content%}
   {% endblock %}
 </div>
