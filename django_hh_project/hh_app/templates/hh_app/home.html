@@ -4,6 +4,9 @@
 <h3>Home page</h3>
 
 <p>Find happy hours near you!</p>
+
+{% if not user.is_authenticated %}
 <p>If your a new user, register <a href="{% url 'hh_app:register' %}">HERE</a>!</p>
+{% endif %}
 
 {% endblock %}

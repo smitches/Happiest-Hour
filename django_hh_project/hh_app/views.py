@@ -6,6 +6,7 @@ from .models import *
 from .forms import *
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from .forms import UserRegisterForm
@@ -69,7 +70,7 @@ class BarUpdate(UserPassesTestMixin, generic.UpdateView):
 	model = Bar
 	template_name = 'hh_app/bar_update.html'
 	fields = ['bar_name','street_address','phone_number','region','features']
-	success_url = reverse_lazy('hh_app:home')
+	success_url = reverse_lazy('hh_app:mybars')
 	def test_func(self):
 		bar_id = self.kwargs.get('pk')
 		bar = Bar.objects.get(id=bar_id)
@@ -78,13 +79,15 @@ class BarUpdate(UserPassesTestMixin, generic.UpdateView):
 class HHUpdate(UserPassesTestMixin,generic.UpdateView):
 	#only bar manager can update
 	model = HappyHour
-	template_name = 'hh_app/update_hh.html'
+	template_name = 'hh_app/hh_update.html'
 	fields = ['start_time','end_time','drinks','food','menu_pdf']
-	success_url = reverse_lazy('hh_app:home')
 	def test_func(self):
 		hh_id = self.kwargs.get('pk')
 		hh = HappyHour.objects.get(id=hh_id)
+		self.bar = hh.bar
 		return self.request.user == hh.bar.manager
+	def get_success_url(self):
+		return reverse('hh_app:bar_hhs', kwargs={'bar_id': self.bar.id})
 
 class ReviewUpdate(UserPassesTestMixin, generic.UpdateView):
 	model = Reviews
@@ -105,8 +108,26 @@ class ReviewCreate(LoginRequiredMixin,generic.CreateView):
 		form.instance.reviewer = self.request.user
 		return super().form_valid(form)
 
+class HappyHourDelete(UserPassesTestMixin, generic.DeleteView):
+	model = HappyHour
+	template_name = 'hh_app/hh_delete.html'
+	def test_func(self):
+		self.bar = HappyHour.objects.get(id = self.kwargs.get('pk')).bar
+		return self.bar.manager==self.request.user
+	def get_success_url(self):
+		return reverse('hh_app:bar_hhs', kwargs={'bar_id': self.bar.id})
 
-# @login_required()
+class BarDelete(UserPassesTestMixin, generic.DeleteView):
+	model = Bar
+	template_name = 'hh_app/bar_delete.html'
+	def test_func(self):
+		bar = Bar.objects.get(id = self.kwargs.get('pk'))
+		return bar.manager==self.request.user
+	def get_success_url(self):
+		return reverse('hh_app:mybars')
+
+
+@login_required
 def create_bar(request):
 	if request.method == 'POST':
 		form = CreateBarForm(request.POST)
@@ -116,31 +137,31 @@ def create_bar(request):
 			bar.manager = request.user
 			bar.approved = False
 			bar.save()
-			return render(request = request,
-				  template_name = "hh_app/thanks.html")
+			return redirect(reverse('hh_app:mybars'))
 
 	else:
 		form = CreateBarForm()
 
 	return render(request, 'hh_app/bar_create.html', {'form': form})
 
+@login_required
 def create_happy_hour(request, bar_id):
+	
+	bar = Bar.objects.get(id=bar_id)
+	
+	if bar.manager != request.user:
+		return HttpResponseForbidden()
+
 	if request.method == 'POST':
 		form = CreateHappyHour(request.POST)
 
 		if form.is_valid():
-			try:
-				bar = Bar.objects.get(id=bar_id)
-			except ObjectDoesNotExist:
-				pass
-
 			for day in form.cleaned_data['weekdays']:
 				hh = HappyHour(day_of_week=day, bar = bar)
 				form = CreateHappyHour(request.POST, instance=hh)
 				form.save()
 
-			return render(request = request,
-				  template_name = "hh_app/thanks.html")
+			return redirect(reverse('hh_app:bar_hhs', kwargs={'bar_id': bar.id}))
 
 	else:
 		form = CreateHappyHour()
@@ -165,4 +186,4 @@ def display_bars(request):
 
 def display_bars_happyhours(request, bar_id):
 	bar_obj = Bar.objects.get(id=bar_id)
-	return render(request, 'hh_app/display_hhs.html', {'bar': bar_obj, 'hhs': bar_obj.happyhour_set.all()})
+	return render(request, 'hh_app/display_hhs.html', {'bar': bar_obj, 'hhs': bar_obj.happyhour_set.all().order_by('day_of_week')})

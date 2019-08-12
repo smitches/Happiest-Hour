@@ -19,15 +19,17 @@
 	  <td>{{ h.drinks}}</td>
 	  <td>{{ h.food}}</td>
 	  <td>{{ h.menu_pdf}}</td>
-     <td>
-	  		<form action="{% url 'hh_app:update_hh' h.id%}">
+     <td>	
+     		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:update_hh' h.id%}">Update</a>
+	  		<!-- <form action="{% url 'hh_app:update_hh' h.id%}">
                 <input type="submit" value="Update"/>
-          	</form>
+          	</form> -->
      </td>
      <td>
-	  		<form action="#">
+     		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:hh_delete' h.id%}">Delete</a>
+	  		<!-- <form action="#">
                 <input type="submit" value="Delete"/>
-          	</form>
+          	</form> -->
      </td>
 	</tr>
 	{% endfor %}
