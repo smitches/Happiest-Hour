@@ -13,6 +13,7 @@
 	  <th>Region</th>
 	  <th>Add Happy Hours</th>
 	  <th>View Happy Hours</th>
+	  <th>View Reviews</th>
 	  <th>Update</th>
 	  <th>Delete</th>
 	</tr>
@@ -31,6 +32,9 @@
 	  		<!-- <form action="{% url 'hh_app:bar_hhs' b.id%}" class="btn btn-secondary">
                 <input type="submit" value="View"/>
           	</form> -->
+     </td>
+     <td>
+     		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:bar_reviews' b.id%}">Reviews</a>
      </td>
      <td>
      		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:update_bar' b.id%}">Update</a>

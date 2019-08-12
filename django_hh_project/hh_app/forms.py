@@ -18,7 +18,7 @@ class CreateBarForm(forms.ModelForm):
     features = forms.ModelMultipleChoiceField(label='Features', required=False, queryset=Feature.objects.all(), to_field_name="feature_title")'''
 
 class CreateHappyHour(forms.ModelForm):
-    days = [("M", "Monday"), ("T", "Tuesday"),("W", "Wednesday"),("Th", "Thursday"),("F", "Friday")]
+    days = [("M", "Monday"), ("T", "Tuesday"),("W", "Wednesday"),("Th", "Thursday"),("F", "Friday"), ("Sa", "Saturday"), ("Su", "Sunday")]
     weekdays = forms.MultipleChoiceField(label='Days of the Week', choices=days)
 
     class Meta: 

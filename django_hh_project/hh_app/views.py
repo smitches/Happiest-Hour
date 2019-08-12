@@ -127,6 +127,14 @@ class BarDelete(UserPassesTestMixin, generic.DeleteView):
 	def get_success_url(self):
 		return reverse('hh_app:mybars')
 
+class ReviewDelete(UserPassesTestMixin, generic.DeleteView):
+	model = Reviews
+	template_name = 'hh_app/review_delete.html'
+	def test_func(self):
+		review = Reviews.objects.get(id = self.kwargs.get('pk'))
+		return review.reviewer==self.request.user
+	def get_success_url(self):
+		return reverse('hh_app:my_reviews')
 
 @login_required
 def create_bar(request):
@@ -212,8 +220,6 @@ WHICH HHS BELONG TO THOSE BARS
 '''
 
 
-
-
 class MyReviewsDisplay(LoginRequiredMixin,generic.ListView):
 	model = Reviews
 	template_name = 'hh_app/my_reviews_display.html'
@@ -226,3 +232,23 @@ def display_bars(request):
 def display_bars_happyhours(request, bar_id):
 	bar_obj = Bar.objects.get(id=bar_id)
 	return render(request, 'hh_app/display_hhs.html', {'bar': bar_obj, 'hhs': bar_obj.happyhour_set.all().order_by('day_of_week')})
+
+def display_bars_reviews(request, bar_id):
+	bar_obj = Bar.objects.get(id=bar_id)
+	return render(request, 'hh_app/display_bar_reviews.html', {'bar': bar_obj, 'reviews': bar_obj.reviews_set.all()})
+
+def display_all_bars(request):
+	return render(request, 'hh_app/display_all_bars.html', {'bars': Bar.objects.all()})
+
+
+
+
+
+
+
+
+
+
+
+
+

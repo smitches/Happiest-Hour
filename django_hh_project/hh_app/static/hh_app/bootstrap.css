@@ -62,6 +62,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 }
 
 .ourcontent {
+  max-width: 960px;
   margin: auto;
   margin-top: 50;
   text-align: center;
@@ -4770,11 +4771,16 @@ input[type="button"].btn-block {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-column-break-inside: avoid;
   min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.columns {
+  column-count: 3;
 }
 
 .card > hr {
@@ -4933,7 +4939,7 @@ input[type="button"].btn-block {
   }
 }
 
-.card-columns .card {
+.card-columns. card {
   margin-bottom: 0.75rem;
 }
 

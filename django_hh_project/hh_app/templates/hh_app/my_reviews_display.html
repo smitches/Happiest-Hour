@@ -9,6 +9,7 @@
 		<th>Star Count</th>
 		<th>Review Text</th>
 		<th>Edit Review</th>
+		<th>Delete Review</th>
 	</tr>
 	{% for r in object_list %}
 	<tr>
@@ -24,6 +25,11 @@
 		<td>
               <form action="{% url 'hh_app:update_review' r.id%}">
                 <input type="submit" value="Edit"/>
+              </form>
+     	</td>
+     	<td>
+              <form action="{% url 'hh_app:review_delete' r.id%}">
+                <input type="submit" value="Delete"/>
               </form>
      	</td>
 	</tr>
