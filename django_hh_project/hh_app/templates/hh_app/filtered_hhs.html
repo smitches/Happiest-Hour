@@ -1,8 +1,26 @@
 {%extends 'hh_app/home.html'%}
 
 {%block content%}
+<div class="container ">
+	
+	{% for hh in hh_list %}
+		<div class="card text-white bg-primary mb-3" style="">
+		  <div class="card-header">{{hh.day}} from {{hh.start_time}} to {{hh.end_time}}</div>
+		  <div class="card-body">
+		    <h2 class="card-title">{{hh.bar.bar_name}} - {{hh.bar.region.region_name}}</h4>
+		    <h4 class="card-title">{{hh.bar.street_address}}</h2>
+		    <p class="card-text">Drinks? {% if hh.drinks %}YES{%else%}NO{%endif%}</p>
+		    <p class="card-text">Food? {% if hh.food %}YES{%else%}NO{%endif%}</p>
+		    {% for feature in hh.bar.features.all%}
+		    <p class="card-text">{{feature.feature_title}} - {{feature.description}}</p>
+		    {% endfor %}
+		    <div>
+		    	<a type="button" class="btn btn-secondary" href="{{hh.menu_pdf}}">Menu</a>
+		    	<a type="button" class="btn btn-success" href=" url 'hh_app:bar_reviews' hh.bar.id %}">TODO: See all Reviews</a>	
+		    </div>
+		  </div>
+		</div>
+	{% endfor %}
 
-{%for hh in hh_list %}
-
-{%endfor%}
+</div>
 {%endblock%}
