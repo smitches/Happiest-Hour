@@ -9,16 +9,19 @@
 	  <th>Drinks Discounted?</th>
 	  <th>Food Discounted?</th>
 	  <th>Menu Link</th>
+	  {% if user == bar.manager %}
 	  <th>Update</th>
 	  <th>Delete</th>
+	  {%endif%}
 	</tr>
 	{% for h in hhs %}
 	<tr>
-	  <td>{{ h.day_of_week}}</td>
+	  <td>{{ h.day}}</td>
 	  <td>{{ h.start_time }} - {{ h.end_time }}</td>
 	  <td>{{ h.drinks}}</td>
 	  <td>{{ h.food}}</td>
 	  <td>{{ h.menu_pdf}}</td>
+	  {% if user == bar.manager %}
      <td>	
      		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:update_hh' h.id%}">Update</a>
 	  		<!-- <form action="{% url 'hh_app:update_hh' h.id%}">
@@ -31,6 +34,7 @@
                 <input type="submit" value="Delete"/>
           	</form> -->
      </td>
+     {% endif %}
 	</tr>
 	{% endfor %}
 </table>
