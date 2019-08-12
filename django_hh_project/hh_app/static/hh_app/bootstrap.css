@@ -62,7 +62,6 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 }
 
 .ourcontent {
-  max-width: 960px;
   margin: auto;
   margin-top: 50;
   text-align: center;

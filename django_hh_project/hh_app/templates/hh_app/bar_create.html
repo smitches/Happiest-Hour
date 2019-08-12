@@ -1,9 +1,13 @@
 {%extends 'hh_app/base.html'%}
 
 {% block content %}
+<h3>Create Your Bar</h3>
+<br>
+
 <form method="post">
     {% csrf_token %}
-    {{ form | linebreaks}}
+    {{ form.as_p }}
     <input type="submit" value="Submit">
 </form>
+
 {% endblock %}

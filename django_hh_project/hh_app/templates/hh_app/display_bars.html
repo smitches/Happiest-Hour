@@ -10,8 +10,6 @@
 <table class='table'>
 	<tr>
 	  <th>Bar</th>
-	  <th>Street Address</th>
-	  <th>Phone Number</th>
 	  <th>Region</th>
 	  <th>Add Happy Hours</th>
 	  <th>View Happy Hours</th>
@@ -21,28 +19,30 @@
 	{% for b in bars %}
 	<tr>
 	  <td>{{ b.bar_name }}</td>
-	  <td>{{ b.street_address }}</td>
-	  <td>{{ b.phone_number }}</td>
 	  <td>{{ b.region}}</td>
 	  <td>
-	  		<form action="{% url 'hh_app:hh_form' b.id%}">
+	  		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:hh_form' b.id%}">Add</a>
+	  		<!-- <form action="{% url 'hh_app:hh_form' b.id%}" class="btn btn-secondary">
                 <input type="submit" value="Add"/>
-          	</form>
+          	</form> -->
      </td>
      <td>
-	  		<form action="{% url 'hh_app:bar_hhs' b.id%}">
+     		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:bar_hhs' b.id%}">View</a>
+	  		<!-- <form action="{% url 'hh_app:bar_hhs' b.id%}" class="btn btn-secondary">
                 <input type="submit" value="View"/>
-          	</form>
+          	</form> -->
      </td>
      <td>
-	  		<form action="{% url 'hh_app:update_bar' b.id%}">
+     		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:update_bar' b.id%}">Update</a>
+	  		<!-- <form action="{% url 'hh_app:update_bar' b.id%}" class="btn btn-secondary">
                 <input type="submit" value="Update"/>
-          	</form>
+          	</form> -->
      </td>
      <td>
-	  		<form action="#">
+     		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:bar_delete' b.id%}">Delete</a>
+	  		<!-- <form action="#" class="btn btn-secondary">
                 <input type="submit" value="Delete"/>
-          	</form>
+          	</form> -->
      </td>
 	</tr>
 	{% endfor %}

@@ -20,5 +20,7 @@ urlpatterns = [
 	path('login/', auth_views.LoginView.as_view(template_name='hh_app/login.html'), name='login'),
 	path('mybars/', display_bars, name='mybars'),
 	path('bars/<int:bar_id>/happy_hours', display_bars_happyhours, name='bar_hhs'),
-	path('reviews/history/',MyReviewsDisplay.as_view(), name='my_reviews')
+	path('reviews/history/',MyReviewsDisplay.as_view(), name='my_reviews'),
+	path('happy_hours/<int:pk>/delete', HappyHourDelete.as_view(), name='hh_delete'),
+	path('bars/<int:pk>/delete', BarDelete.as_view(), name='bar_delete')
 ]

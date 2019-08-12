@@ -1,0 +1,32 @@
+{%extends 'hh_app/home.html'%}
+
+{%block content%}
+
+<h3>My Reviews</h3>
+<table class='table'>
+	<tr>
+		<th>Bar</th>
+		<th>Star Count</th>
+		<th>Review Text</th>
+		<th>Edit Review</th>
+	</tr>
+	{% for r in object_list %}
+	<tr>
+		<td>
+			{{r.bar.bar_name}}
+		</td>
+		<td>
+			{{r.star_count}}
+		</td>
+		<td>
+			{{r.review_text}}
+		</td>
+		<td>
+              <form action="{% url 'hh_app:update_review' r.id%}">
+                <input type="submit" value="Edit"/>
+              </form>
+     	</td>
+	</tr>
+	{% endfor %}
+</table>
+{%endblock%}
