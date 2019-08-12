@@ -8,7 +8,11 @@
 	  <div class="card-header">{{ b.bar_name }}</div>
 	  <div class="card-body">
 	    <h4 class="card-title">{%for hh in b.happyhour_set.all %}{{hh.day_of_week}} {%endfor%}</h4>
-	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+	    {% if b.happyhour_set.all|length == 0 %}
+	    <h4 class="card-title">No Happy Hours Currently</h4>
+	    {% endif %}
+	    <p class="card-text"><b style="color: #4BBF73">{{ b.region }}</b> <br> {{ b.street_address }} <br> {{ b.avg_count }}<br></p>
+	    <a type="button" class="btn btn-secondary" href="{% url 'hh_app:bar_hhs' b.id%}">View HappyHours</a>
 	  </div>
 	</div>
 {% endfor %}

@@ -16,7 +16,7 @@
 		    {% endfor %}
 		    <div>
 		    	<a type="button" class="btn btn-secondary" href="{{hh.menu_pdf}}">Menu</a>
-		    	<a type="button" class="btn btn-success" href=" url 'hh_app:bar_reviews' hh.bar.id %}">TODO: See all Reviews</a>	
+		    	<a type="button" class="btn btn-success" href="{% url 'hh_app:bar_reviews' hh.bar.id %}">See all Reviews</a>	
 		    </div>
 		  </div>
 		</div>
