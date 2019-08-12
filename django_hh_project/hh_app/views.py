@@ -7,6 +7,7 @@ from .forms import *
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Avg
 from django.urls import reverse, reverse_lazy
 from .forms import UserRegisterForm
 
@@ -30,7 +31,7 @@ def register(request):
 			form.save()
 			username = form.cleaned_data.get('username')
 			#TODO: add messages to base template
-			messages.success(request, f'Your account has been created {username}!')
+			# messages.success(request, f'Your account has been created {username}!')
 			#TODO: log user in
 			return redirect(reverse('hh_app:login'))
 	else:
@@ -90,7 +91,7 @@ class ReviewUpdate(UserPassesTestMixin, generic.UpdateView):
 	model = Reviews
 	template_name = 'hh_app/review_update.html'
 	fields = ['star_count','review_text']
-	success_url = reverse_lazy('hh_app:home')
+	success_url = reverse_lazy('hh_app:my_reviews')
 	def test_func(self): #The test to see if user is creator of review
 		review_id = self.kwargs.get('pk')
 		review = Reviews.objects.get(id=review_id)
@@ -151,14 +152,52 @@ def search_hhs(request):
 	if request.method == 'POST':
 		form = HHFilterForm(request.POST)
 		if form.is_valid():
-			a = form.cleaned_data['day']
-			b = form.cleaned_data['day']
-			c = form.cleaned_data['day']
-			d = form.cleaned_data['day']
-			raise Exception
+			day = form.cleaned_data['day']
+			#time
+			region = form.cleaned_data['region']
+			features = form.cleaned_data['features']
+			star_count = form.cleaned_data['star_count']
+			drinks = form.cleaned_data['drinks']
+			food = form.cleaned_data['food']
+
+			qualifying_hhs = HappyHour.objects.filter(day_of_week = day)
+			if drinks:
+				qualifying_hhs = qualifying_hhs.filter(drinks=True)
+			if food:
+				qualifying_hhs = qualifying_hhs.filter(food=True)
+
+			qualifying_bars = Bar.objects.filter(approved=True)
+			if star_count:
+				qualifying_bars = Bar.objects.annotate(ave_stars = Avg('reviews__star_count')).filter(ave_stars__gte = star_count)
+			if region:
+				qualifying_bars = Bar.objects.filter(region = region)
+			for feature in features:
+				f_bars = (Feature.objects.get(id = feature.id)).bar_set.all()
+				qualifying_bars = qualifying_bars & f_bars
+
+			final_hhs = qualifying_hhs.filter(Q(bar__in=list(qualifying_bars)))
+			render(request,'hh_app/filtered_hhs.html',{'hh_list':list(final_hhs)})
+
 	else:
 		form = HHFilterForm()
 	return render(request,'hh_app/filter.html',{'form':form})
+
+'''
+LOOKING AT EACH HAPPY HOUR.
+WHAT IS THE HH'S BAR.
+WHAT ARE THE HH BAR'S FEATURES
+DOES A BAR HAVE EVERY ONE OF THE FEATURES?
+WHICH HHS BELONG TO THOSE BARS
+'''
+
+
+
+
+class MyReviewsDisplay(LoginRequiredMixin,generic.ListView):
+	model = Reviews
+	template_name = 'hh_app/my_reviews_display.html'
+	def get_queryset(self):
+		return self.request.user.reviews_set.all()
 
 def display_bars(request):
 	return render(request, 'hh_app/display_bars.html', {'bars': request.user.bar_set.all()})

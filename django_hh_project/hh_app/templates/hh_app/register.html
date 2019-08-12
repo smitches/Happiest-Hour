@@ -4,6 +4,9 @@
 
 <form method="post">
     {% csrf_token %}
+    {% for error in form.errors %}
+    {{error}}
+    {% endfor %}
     {{ form.as_p }}
     <input type="submit" value="Submit">
 </form>

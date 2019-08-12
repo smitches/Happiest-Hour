@@ -19,5 +19,6 @@ urlpatterns = [
 	path('logout/', auth_views.LogoutView.as_view(template_name='hh_app/logout.html'), name='logout'),
 	path('login/', auth_views.LoginView.as_view(template_name='hh_app/login.html'), name='login'),
 	path('mybars/', display_bars, name='mybars'),
-	path('bars/<int:bar_id>/happy_hours', display_bars_happyhours, name='bar_hhs')
+	path('bars/<int:bar_id>/happy_hours', display_bars_happyhours, name='bar_hhs'),
+	path('reviews/history/',MyReviewsDisplay.as_view(), name='my_reviews')
 ]

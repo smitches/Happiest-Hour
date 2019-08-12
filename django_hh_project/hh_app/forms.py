@@ -93,4 +93,6 @@ class HHFilterForm(forms.Form):
     #time
     features = forms.ModelMultipleChoiceField(required=False, queryset=Feature.objects.all(), to_field_name="feature_title")
     star_count = forms.IntegerField(label="Min Ave Star Count",max_value = 5, min_value = 0, required=False)
+    food = forms.BooleanField(required = False)
+    drinks = forms.BooleanField(required = False)
     

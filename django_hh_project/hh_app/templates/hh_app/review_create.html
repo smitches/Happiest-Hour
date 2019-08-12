@@ -2,6 +2,12 @@
 
 {%block content%}
 
+<h3>Create a Review</h3>
+
+<a type="button" class="btn btn-info" href="{% url 'hh_app:my_reviews' %}">My Past Reviews</a>
+<br>
+<br>
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

@@ -22,11 +22,12 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'hh_app:mybars' %}">Manage Bars</a>
         </li>
-      {% endif %}
-      {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'hh_app:bar_form' %}">Add your Bar</a>
-        </li>
+      {% else %}
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'hh_app:bar_form' %}">Add your Bar</a>
+          </li>
+        {% endif %}
       {% endif %}
       {% if user.is_authenticated %}
         <li class="nav-item">

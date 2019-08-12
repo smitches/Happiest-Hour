@@ -1,7 +1,12 @@
 {%extends 'hh_app/base.html'%}
 
 {% block content %}
-<h3>My Bars</h3></br>
+<h3>My Bars</h3>
+
+<a type="button" class="btn btn-info" href="{% url 'hh_app:bar_form' %}">Add another Bar</a>
+<br>
+<br>
+
 <table class='table'>
 	<tr>
 	  <th>Bar</th>
