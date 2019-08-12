@@ -38,6 +38,11 @@ class HappyHour(models.Model):
 	menu_pdf = models.CharField(max_length = 100)
 	def __str__(self):
 		return str(self.bar.bar_name) + ': ' + str(self.day_of_week)
+	def day(self):
+		days = {'M':'Monday','T':'Tuesday','W':'Wednesday','Th':'Thursday','F':'Friday',
+				'Sa':'Saturday','Su':'Sunday'}
+		return days[self.day_of_week]
+
 
 class Reviews(models.Model):
 	reviewer = models.ForeignKey(User, on_delete = models.CASCADE)

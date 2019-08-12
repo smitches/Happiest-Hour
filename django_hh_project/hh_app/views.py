@@ -196,8 +196,9 @@ def search_hhs(request):
 				f_bars = (Feature.objects.get(id = feature.id)).bar_set.all()
 				qualifying_bars = qualifying_bars & f_bars
 
-			final_hhs = qualifying_hhs.filter(Q(bar__in=list(qualifying_bars)))
-			render(request,'hh_app/filtered_hhs.html',{'hh_list':list(final_hhs)})
+			final_hhs = list(qualifying_hhs.filter(Q(bar__in=list(qualifying_bars))).all())
+
+			return render(request,'hh_app/filtered_hhs.html',{'hh_list':final_hhs})
 
 	else:
 		form = HHFilterForm()
