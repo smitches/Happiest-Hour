@@ -1,0 +1,10 @@
+{%extends 'hh_app/base.html'%}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+   <p class="alert alert-dismissible alert-danger">Are you sure you want to delete "Review for {{ object.bar.bar_name }}"?</p>
+   <input type="submit" class="btn btn-danger" value="Confirm">
+</form>
+
+{% endblock %}
