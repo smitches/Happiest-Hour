@@ -18,8 +18,8 @@
 		    <p class="card-text">{{feature.feature_title}} - {{feature.description}}</p>
 		    {% endfor %}
 		    <div>
-		    	<button type="button" class="btn btn-secondary" href="{{hh.menu_pdf}}">Menu</button>
-		    	<button type="button" class="btn btn-success" href="{% url 'hh_app:bar_reviews' hh.bar.id %}">See all Reviews</button>	
+		    	<button type="button" class="btn btn-secondary" onclick=window.location.href="{{hh.menu_pdf}}">Menu</button>
+		    	<button type="button" class="btn btn-success" onclick=window.location.href="{% url 'hh_app:bar_reviews' hh.bar.id %}">See all Reviews</button>	
 		    </div>
 		  </div>
 		</div>

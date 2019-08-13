@@ -14,7 +14,7 @@
 	    <h4 class="card-title">No Happy Hours Currently</h4>
 	    {% endif %}
 	    <p class="card-text"><b style="color: #4BBF73">{{ b.region }}</b> <br> {{ b.street_address }} <br> {{ b.avg_count }}<br></p>
-	    <button type="button" class="btn btn-success" href="{% url 'hh_app:bar_hhs' b.id%}">View HappyHours</button>
+	    <button type="button" class="btn btn-success" onclick=window.location.href="{% url 'hh_app:bar_hhs' b.id%}">View HappyHours</button>
 	  </div>
 	</div>
 {% endfor %}
