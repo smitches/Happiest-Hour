@@ -1,6 +1,9 @@
 {%extends 'hh_app/base.html'%}
 
 {% block content %}
+<h3>Create a Happy Hour</h3>
+<br>
+
 <form method="post">
     {% csrf_token %}
     {{ form | linebreaks}}

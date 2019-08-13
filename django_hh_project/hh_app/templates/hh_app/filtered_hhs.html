@@ -1,6 +1,9 @@
 {%extends 'hh_app/home.html'%}
 
 {%block content%}
+<h3>Happy Hour Results</h3>
+<br>
+
 <div class="container ">
 	
 	{% for hh in hh_list %}
@@ -15,8 +18,8 @@
 		    <p class="card-text">{{feature.feature_title}} - {{feature.description}}</p>
 		    {% endfor %}
 		    <div>
-		    	<a type="button" class="btn btn-secondary" href="{{hh.menu_pdf}}">Menu</a>
-		    	<a type="button" class="btn btn-success" href="{% url 'hh_app:bar_reviews' hh.bar.id %}">See all Reviews</a>	
+		    	<button type="button" class="btn btn-secondary" href="{{hh.menu_pdf}}">Menu</button>
+		    	<button type="button" class="btn btn-success" href="{% url 'hh_app:bar_reviews' hh.bar.id %}">See all Reviews</button>	
 		    </div>
 		  </div>
 		</div>

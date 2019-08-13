@@ -1,6 +1,8 @@
 {%extends 'hh_app/base.html'%}
 
 {% block content %}
+<h3>All Bars</h3>
+<br>
 
 <div class="columns">
 {% for b in bars %}
@@ -12,7 +14,7 @@
 	    <h4 class="card-title">No Happy Hours Currently</h4>
 	    {% endif %}
 	    <p class="card-text"><b style="color: #4BBF73">{{ b.region }}</b> <br> {{ b.street_address }} <br> {{ b.avg_count }}<br></p>
-	    <a type="button" class="btn btn-secondary" href="{% url 'hh_app:bar_hhs' b.id%}">View HappyHours</a>
+	    <button type="button" class="btn btn-success" href="{% url 'hh_app:bar_hhs' b.id%}">View HappyHours</button>
 	  </div>
 	</div>
 {% endfor %}

@@ -20,7 +20,7 @@
 	  <td>{{ h.start_time }} - {{ h.end_time }}</td>
 	  <td>{{ h.drinks}}</td>
 	  <td>{{ h.food}}</td>
-	  <td>{{ h.menu_pdf}}</td>
+	  <td><a href="{{ h.menu_pdf}}">Menu</td>
 	  {% if user == bar.manager %}
      <td>	
      		<a type="button" class="btn btn-secondary" href="{% url 'hh_app:update_hh' h.id%}">Update</a>
