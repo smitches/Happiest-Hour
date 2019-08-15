@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #ADD CREATED APPS
     'hh_app.apps.HhAppConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -172,3 +173,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'hh_app:home'
 LOGIN_URL = 'hh_app:login'
+
+REST_FRAMEWORK = {
+    
+}
