@@ -2,3 +2,7 @@ Django==2.1.10
 djangorestframework==3.10.2
 PyMySQL==0.9.3
 pytz==2019.2
+GoogleAppEngineCloudStorageClient==1.9.22.1
+werkzeug==0.15.5
+google-cloud-storage==1.13.0
+

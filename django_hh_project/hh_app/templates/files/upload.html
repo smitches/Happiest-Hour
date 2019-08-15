@@ -1,0 +1,12 @@
+{%extends 'hh_app/base.html'%}
+
+{% block content %}
+<form action = "{% url 'hh_app:uploader'%}" method = "POST" 
+    enctype = "multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+    later do happierhour.appspot.com
+</form>
+
+{% endblock %}

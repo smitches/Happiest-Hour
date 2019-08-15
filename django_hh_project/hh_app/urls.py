@@ -13,6 +13,13 @@ router.register('reviews', ReviewsViewSet)
 
 urlpatterns = [
 	path('api/',include(router.urls)),
+
+
+	path('upload/',upload_form,name='upload_form'),
+	path('uploader/',uploader,name='uploader'),
+	path('look/<file_name>/',look,name='look'),
+
+
 	path('', home, name="home"),
 	path('create_bar/', create_bar, name='bar_form'),
 	path('create_happy_hour/<int:bar_id>/', create_happy_hour, name='hh_form'),
