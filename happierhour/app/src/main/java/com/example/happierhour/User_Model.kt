@@ -4,6 +4,7 @@ class User_Model {
 
     var name: String? = null
     var email: String? = null
+    var token: String? = null
 
     fun getNames(): String {
         return name.toString()

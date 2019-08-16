@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
                 // Clear the error.
                 password_text_input.error = null
                 // Navigate to the next Fragment.
-                (activity as NavigationHost).navigateTo(ListingFragment(), false)
+                (activity as NavigationHost).navigateTo(AddReviewFragment(), false)
             }
         })
 
