@@ -1,24 +1,13 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from .views import *
-from .api_views import *
-from rest_framework import routers
-
 
 app_name = 'hh_app'
 
-router = routers.DefaultRouter()
-router.register('reviews', ReviewsViewSet)
-
-
 urlpatterns = [
-	path('api/',include(router.urls)),
-
-
 	path('upload/',upload_form,name='upload_form'),
 	path('uploader/',uploader,name='uploader'),
 	path('look/<file_name>/',look,name='look'),
-
 
 	path('', home, name="home"),
 	path('create_bar/', create_bar, name='bar_form'),

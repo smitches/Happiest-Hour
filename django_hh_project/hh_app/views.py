@@ -1,19 +1,72 @@
+#=========================================================================================
+#=========================================================================================
+#==============================FOR FILE UPLOAD PURPOSES ONLY==============================
+#=========================================================================================
+#=========================================================================================
+
+from google.cloud import storage
+from google.cloud.storage import Blob
+from werkzeug.utils import secure_filename
+import io
+import requests
+
+def uploader(request):
+	if request.method == 'POST':
+		form = UploadFileForm(request.POST, request.FILES)
+		if form.is_valid():
+			file = request.FILES['file']
+			bucket_name = "menus_happierhour"
+			client = storage.Client()
+			bucket = client.get_bucket(bucket_name)
+			blob = bucket.blob(secure_filename(file.name))
+			try:
+				blob.upload_from_file(file.file)
+				return JsonResponse({"success": True})
+			except Exception as e:
+				logging.exception(e)
+				return JsonResponse({"success": False})
+	return JsonResponse({'success':False})
+
+
+def upload_form(request):
+	return render(request=request,template_name='files/upload.html', context={'form':UploadFileForm()})
+def look(request,file_name):
+	try:
+	# Reformat the filename using the bucket name fetched above
+		bucket_name = "menus_happierhour"
+		client = storage.Client()
+		bucket = client.get_bucket(bucket_name)
+		blob = bucket.blob(secure_filename(file_name))
+		data = blob.download_as_string()	
+		extension = secure_filename(file_name).rsplit('.', 1)[1]
+		if extension == "png":
+			return FileResponse(io.BytesIO(data),content_type='image/png')
+
+		elif extension == 'pdf':
+			return FileResponse(io.BytesIO(data),content_type='application/pdf')
+		else:
+			return FileResponse(io.BytesIO(data))
+	except Exception as e: 
+		return JsonResponse({'error': 'Could not find file {}'.format(file_name)})
+
+
+#=========================================================================================
+#=========================================================================================
+#==============================ACTUAL APPLICATION VIEWS===================================
+#=========================================================================================
+#=========================================================================================
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import *
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q, Avg
 from django.http import *
+from django.shortcuts import *
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+
 from .models import *
 from .forms import *
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseForbidden
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q, Avg
-from django.urls import reverse, reverse_lazy
-from .forms import UserRegisterForm
-
-
-# Create your views here.
 def home(request):
 	if request.method == "GET":
 		pass
@@ -211,14 +264,6 @@ def search_hhs(request):
 	else:
 		form = HHFilterForm()
 	return render(request,'hh_app/filter.html',{'form':form})
-
-'''
-LOOKING AT EACH HAPPY HOUR.
-WHAT IS THE HH'S BAR.
-WHAT ARE THE HH BAR'S FEATURES
-DOES A BAR HAVE EVERY ONE OF THE FEATURES?
-WHICH HHS BELONG TO THOSE BARS
-'''
 
 
 class MyReviewsDisplay(LoginRequiredMixin,generic.ListView):

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     #ADD CREATED APPS
     'hh_app.apps.HhAppConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
 ]
 
 MIDDLEWARE = [
