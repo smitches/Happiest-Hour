@@ -6,7 +6,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Reviews
 		fields = '__all__'
-
+		read_only_fields = ["reviewer"]
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User

@@ -15,6 +15,21 @@ class ReviewsListCreateView(generics.ListCreateAPIView):
 	queryset = Reviews.objects.all()
 	serializer_class = ReviewSerializer
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+	# def create(self,request,*args,**kwargs):
+	# 	# print(request.user)
+	# 	# print(self.request.user)
+	# 	# print(dir(self))
+	# 	# print(self.kwargs)
+	# 	# print()
+	# 	# print(self.args)
+	# 	# print()
+	# 	# print(**kwargs)
+	# 	# print(dir(self.request))
+	# 	# #self.user = request.user
+	# 	super().create(request,*args,**kwargs)
+	def perform_create(self,serializer):
+		print(self.request.user)
+		serializer.save(reviewer = self.request.user)
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()

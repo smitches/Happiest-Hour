@@ -78,9 +78,9 @@ def post_review():
 	API_ENDPOINT = "http://127.0.0.1:8000/api/reviews/"
 	TOKEN = 'b679929deeb77ce1355c3752005a248e95e8ed5d'
 	body = {
-        "star_count": 4,
-        "review_text": "Making an API Review from python",
-        "reviewer": 2,
+        "star_count": 5,
+        "review_text": "Making another API Review from python",
+        "reviewer": 10,
         "bar": 1
     }
 	headers = {'content-type':'application/json','Authorization':'Token '+TOKEN}
@@ -107,4 +107,4 @@ def test_auth():
 
 # print()
 
-# post_review()
+post_review()
