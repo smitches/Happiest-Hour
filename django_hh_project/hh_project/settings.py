@@ -44,9 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #ADD CREATED APPS
     'hh_app.apps.HhAppConfig',
+
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 ]
 
 MIDDLEWARE = [
@@ -177,5 +183,11 @@ LOGIN_REDIRECT_URL = 'hh_app:home'
 LOGIN_URL = 'hh_app:login'
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
     
 }
+
+#a module requires this
+SITE_ID = 1
