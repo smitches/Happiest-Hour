@@ -55,8 +55,8 @@ class CustomAdapter(private val context: Context, private val usersModelArrayLis
             holder = convertView.tag as ViewHolder
         }
 
-        holder.name!!.text = "Name: " + usersModelArrayList[position].getNames()
-        holder.email!!.text = "Email: " + usersModelArrayList[position].getEmails()
+//        holder.name!!.text = "Name: " + usersModelArrayList[position].getNames()
+//        holder.email!!.text = "Email: " + usersModelArrayList[position].getEmails()
 
         return convertView
     }

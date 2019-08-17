@@ -1,19 +1,11 @@
 package com.example.happierhour
 
-import android.content.Context
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
-import java.nio.charset.Charset
-import android.app.PendingIntent.getActivity
-
 import java.util.HashMap
 
 import okhttp3.FormBody
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 
 
 class MyOkHttpRequest(client: OkHttpClient) {
@@ -22,6 +14,8 @@ class MyOkHttpRequest(client: OkHttpClient) {
     init {
         this.client = client
     }
+
+   val mytoken = "01a9f063a216f68483c45cf0bbe584bd7de109ac"
 
     fun POST(url: String, parameters: HashMap<String, String>) : String? {
         val builder = FormBody.Builder()
@@ -34,7 +28,7 @@ class MyOkHttpRequest(client: OkHttpClient) {
        val formBody = builder.build()
        val request = Request.Builder()
             .url(url)
- //           .header("Authorization", "Token 12345")
+//            .header("Authorization", "Token $mytoken")
             .post(formBody)
             .build()
 
@@ -47,7 +41,7 @@ class MyOkHttpRequest(client: OkHttpClient) {
     fun GET(url: String): String? {
         val request = Request.Builder()
             .url(url)
-//            .header("Authorization", "Token 12345")
+            .header("Authorization", "Token $mytoken")
             .build()
 
         val response = client.newCall(request).execute()

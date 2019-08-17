@@ -31,8 +31,9 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
                 val gotresponse = fetchInfo()
                 val jsonarray = JSONArray(gotresponse)
                 uiThread {
+                    reviews.text = jsonarray.toString()
 
-                   reviews.text = jsonarray.toString()
+
                 }
             }
 
