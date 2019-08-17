@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_register.view.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import org.json.JSONArray
@@ -27,8 +28,11 @@ class LoginFragment : Fragment() {
                 // Clear the error.
                 password_text_input.error = null
                 // Navigate to the next Fragment.
-                (activity as NavigationHost).navigateTo(AddReviewFragment(), false)
+                (activity as NavigationHost).navigateTo(SeeReviewFragment(), false)
             }
+        })
+        view.sign_up_button.setOnClickListener({
+            (activity as NavigationHost).navigateTo(RegisterFragmentFragment(),addToBackstack = false)
         })
 
         // Clear the error once more than 8 characters are typed.
