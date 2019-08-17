@@ -3,9 +3,11 @@ from .forms import *
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets, generics, permissions, views, response
+from rest_framework.decorators import api_view
 from .api_serializers import *
 from django.core.exceptions import PermissionDenied
 
+from django.db.models import Q, Avg
 ##########################################################################
 ##########################################################################
 ############################ PERMISSIONS #################################
@@ -69,6 +71,11 @@ class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class UserLoggedInView(generics.ListAPIView):
+	serializer_class = UserSerializer
+	permission_classes = [permissions.IsAuthenticated]
+	def get_queryset(self):
+		return User.objects.filter(id = self.request.user.id)
 
 
 class ReviewsListCreateView(generics.ListCreateAPIView):
@@ -147,6 +154,120 @@ class BarHappyHoursView(generics.ListCreateAPIView):
 		if self.request.user != Bar.objects.get(id=bar_id).manager:
 			raise PermissionDenied
 		serializer.save(bar = Bar.objects.get(id=bar_id))
+
+@api_view(['GET','POST'])
+def happyhour_search(request):
+	if request.method == 'POST':
+		if 'day' in request.data.keys():
+			day = request.data['day']
+		else:
+			day = ""
+
+		if 'region_id' in request.data.keys():
+			region_id = int(request.data['region_id'])
+		else:
+			region_id = 0
+
+		if 'feature_ids' in request.data.keys():
+			feature_ids = list(request.data['feature_ids'])
+		else:
+			feature_ids = []
+		
+		if 'star_count' in request.data.keys():
+			star_count = float(request.data['star_count'])
+		else:
+			star_count = 0
+		
+		if 'drinks' in request.data.keys():
+			drinks = bool(request.data['drinks'])
+		else:
+			drinks = False
+		
+		if 'food' in request.data.keys():
+			food = bool(request.data['food'])
+		else:
+			food = False
+
+
+		if day:
+			qualifying_hhs = HappyHour.objects.filter(day_of_week = day)
+		else:
+			qualifying_hhs = HappyHour.objects
+
+
+		if drinks:
+			qualifying_hhs = qualifying_hhs.filter(drinks=True)
+		if food:
+			qualifying_hhs = qualifying_hhs.filter(food=True)
+
+
+		qualifying_bars = Bar.objects.filter(approved=True)
+		if star_count:
+			qualifying_bars = Bar.objects.annotate(ave_stars = Avg('reviews__star_count')).filter(ave_stars__gte = star_count)
+		if region_id:
+			qualifying_bars = Bar.objects.filter(region__id = region_id)
+		for feature_dict in feature_ids:
+			feature_id = int(feature_dict['feature_id'])
+			f_bars = (Feature.objects.get(id = feature_id)).bar_set.all()
+			qualifying_bars = qualifying_bars & f_bars
+
+		final_hhs = qualifying_hhs.filter(Q(bar__in=list(qualifying_bars))).all()
+
+		hh_serializer = HappyHourSerializer(final_hhs,many=True)
+
+		return response.Response(hh_serializer.data)
+	return response.Response({"hello":"world"})
+
+# class HappyHourSearchView(views.APIView):
+# 	# http_method_names = ['GET','POST','OPTIONS','HEAD']
+# 	def get(self,request):
+# 		hhs = HappyHour.objects.all()
+# 		hh_serializer = HappyHourSerializer(hhs, many=True)
+# 		return response.Response(hh_serializer.data)
+# 	def post(self,request):
+# 		print(request.kwargs or None)
+# 		print(self.kwargs or None)
+# 		hhs = HappyHour.objects.all()
+# 		hh_serializer = HappyHourSerializer(hhs, many=True)
+# 		return response.Response(hh_serializer.data)
+
+'''
+def search_hhs(request):
+	if request.method == 'POST':
+		form = HHFilterForm(request.POST)
+		if form.is_valid():
+			day = form.cleaned_data['day']
+			#time
+			region = form.cleaned_data['region']
+			features = form.cleaned_data['features']
+			star_count = form.cleaned_data['star_count']
+			drinks = form.cleaned_data['drinks']
+			food = form.cleaned_data['food']
+
+			qualifying_hhs = HappyHour.objects.filter(day_of_week = day)
+			if drinks:
+				qualifying_hhs = qualifying_hhs.filter(drinks=True)
+			if food:
+				qualifying_hhs = qualifying_hhs.filter(food=True)
+
+			qualifying_bars = Bar.objects.filter(approved=True)
+			if star_count:
+				qualifying_bars = Bar.objects.annotate(ave_stars = Avg('reviews__star_count')).filter(ave_stars__gte = star_count)
+			if region:
+				qualifying_bars = Bar.objects.filter(region = region)
+			for feature in features:
+				f_bars = (Feature.objects.get(id = feature.id)).bar_set.all()
+				qualifying_bars = qualifying_bars & f_bars
+
+			final_hhs = list(qualifying_hhs.filter(Q(bar__in=list(qualifying_bars))).all())
+
+			return render(request,'hh_app/filtered_hhs.html',{'hh_list':final_hhs})
+
+	else:
+		form = HHFilterForm()
+	return render(request,'hh_app/filter.html',{'form':form})
+
+'''
 
 # class BarHappyHourCreateView(generics.CreateAPIView)
 # 	serializer_class = HappyHourSerializer

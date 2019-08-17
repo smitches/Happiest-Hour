@@ -35,4 +35,10 @@ class FeatureSerializer(serializers.ModelSerializer):
 		model = Feature
 		fields = '__all__'
 
-
+# class HappyHourInfoSerializer(serializers.Serializer):
+# 	day = serializers.CharField(max_length=2,required=False)
+# 	region_id = serializers.IntegerField(required=False)
+# 	feature_ids = serializers.IntegerField(required=False)
+# 	star_count = serializers.FloatField(required=False)
+# 	drinks = serializers.BooleanField(required=False)
+# 	food = serializers.BooleanField(required=False)
