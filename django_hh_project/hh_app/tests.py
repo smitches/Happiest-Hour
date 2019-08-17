@@ -102,9 +102,26 @@ def test_auth():
 	print(str(r.headers))
 	print(r.text)
 	
-
+def post_search():
+	API_ENDPOINT = "http://127.0.0.1:8000/api/happyhours/search/"
+	body = {
+    	'day':'M',
+    	'region_id':1,
+    	'feature_ids': [
+    		{'feature_id':1},
+    		{'feature_id':2}
+    	],
+    	'star_count':3,
+    	'drinks':True,
+    	'food':True
+    }
+	headers = {'content-type':'application/json'}
+	r = requests.post(url = API_ENDPOINT, data = json.dumps(body), headers=headers)
+	print(str(r.headers))
+	print(r.text)
+post_search()
 # test_auth()	
 
 # print()
 
-post_review()
+# post_review()

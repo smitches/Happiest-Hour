@@ -58,7 +58,8 @@ class AddReviewFragment : Fragment(), AnkoLogger {
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
 
-        val url = "http://happierhour.appspot.com/api/reviews/"
+//        val url = "http://happierhour.appspot.com/api/rest-auth/login/"
+        val url  = "https://happierhour.appspot.com/api/reviews/"
         val contents:HashMap<String,String> = HashMap<String,String>()
         contents.put("star_count", "2" )
         contents.put("review_text", "From Android")
