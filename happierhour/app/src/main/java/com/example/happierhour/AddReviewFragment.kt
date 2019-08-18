@@ -24,9 +24,10 @@ class AddReviewFragment : Fragment(), AnkoLogger {
         val view = inflater.inflate(R.layout.add_review, container, false)
 
         view.button.setOnClickListener {
-            info("good")
+
             doAsync {
                 info("good2")
+
                 val postresponse = addInfo()
                 uiThread {
 

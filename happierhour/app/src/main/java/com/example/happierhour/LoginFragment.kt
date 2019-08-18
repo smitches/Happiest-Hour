@@ -15,20 +15,24 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
+import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.info
+import com.example.happierhour.MyApplication.Companion.user_token
+import com.google.gson.JsonObject
+import org.jetbrains.anko.uiThread
 
 /**
  * Fragment representing the login screen for Shrine.
  */
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), AnkoLogger {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.login_fragment, container, false)
         // Set an error if the password is less than 8 characters.
-        view.next_button.setOnClickListener({
+        view.next_button.setOnClickListener {
             if (!isPasswordValid(password_edit_text.text!!)) {
                 password_text_input.error = "Password needs to be 8 characters or more."
             } else {
@@ -36,36 +40,50 @@ class LoginFragment : Fragment() {
                 password_text_input.error = null
 
                 // Navigate to the next Fragment.
-                (activity as NavigationHost).navigateTo(SeeReviewFragment(), false)
+    //                (activity as NavigationHost).navigateTo(SeeReviewFragment(), false)
 
 
                 doAsync {
                     val usernameInput = username_edit_text.getText().toString()
                     val passwordInput = password_edit_text.getText().toString()
-                    val getTheToken = checkLoginIn(usernameInput, passwordInput)
-                    println(getTheToken)
-                    if (getTheToken != null) {
-                        (activity as NavigationHost).navigateTo(AddReviewFragment(), false)
+                    val response = checkLoginIn(usernameInput, passwordInput)
+                    info(response.toString())
+                    var returnedToken = ""
+                    if(response.has("key")){
+                        returnedToken = response.get("key").toString()
+                    }
+                    info(usernameInput)
+                    info(passwordInput)
+                    info(user_token)
+                    if (returnedToken != "") {
+                        user_token = returnedToken
+                        (activity as NavigationHost).navigateTo(LogoutFragment(), false)
+                    }else{
+                        uiThread {
+
+                            view.login_status.text = "Unable to log in with provided credentials"
+                        }
+
                     }
                 }
             }
-        })
-        view.sign_up_button.setOnClickListener({
+        }
+        view.sign_up_button.setOnClickListener {
             (activity as NavigationHost).navigateTo(RegisterFragmentFragment(),addToBackstack = false)
-        })
+        }
 
         // Clear the error once more than 8 characters are typed.
-        view.password_edit_text.setOnKeyListener({ _, _, _ ->
+        view.password_edit_text.setOnKeyListener { _, _, _ ->
             if (isPasswordValid(password_edit_text.text!!)) {
                 // Clear the error.
                 password_text_input.error = null
             }
             false
-        })
+        }
         return view
     }
 
-    private fun checkLoginIn(username: String, password: String) : String {
+    private fun checkLoginIn(username: String, password: String) : JSONObject {
 
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
@@ -78,10 +96,7 @@ class LoginFragment : Fragment() {
 
         val response_body = JSONObject(request.POST(url, contents))
 
-        val returnedToken = response_body.get("key").toString()
-        println(returnedToken)
-
-        return returnedToken
+        return response_body
     }
 
     // "isPasswordValid"  method goes here

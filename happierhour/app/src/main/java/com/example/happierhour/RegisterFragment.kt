@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder
 
 
 import android.text.Editable
+import com.example.happierhour.MyApplication.Companion.user_token
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import org.jetbrains.anko.AnkoLogger
@@ -32,43 +33,42 @@ class RegisterFragmentFragment : Fragment(), AnkoLogger {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_register, container, false)
         // Set an error if the password is less than 8 characters.
-        view.register_button.setOnClickListener({
+        view.cancel_button.setOnClickListener {
+            (activity as NavigationHost).navigateTo(LoginFragment(), false)
+        }
+        view.register_button.setOnClickListener {
             if (!isPasswordValid(password1_edit_text.text!!)) {
                 password1_text_input.error = getString(R.string.error_password)
             } else {
-                // Clear the error.
                 password1_text_input.error = null
-                // Navigate to the next Fragment
             }
             body.set("username",username_edit_text.text.toString())
             body.set("email",email_edit_text.text.toString())
             body.set("password1",password1_edit_text.text.toString())
             body.set("password2",password2_edit_text.text.toString())
-            info(body.toString())
+
             status_text.text = "Pending"
+
             doAsync {
-                info("calling API")
                 val apiresponse = fetchInfo()
-                info(apiresponse.toString())
                 val jsonobj = JSONObject(apiresponse)
                 info(jsonobj.toString())
                 uiThread {
                     status_text.text = jsonobj.toString()
                 }
-//                info(jsonobj.keys())
-//                info(jsonobj.has("username"))
                 if(jsonobj.has("key")){
-                    info("does have that key")
+                    info("Resistration Successful")
+                    user_token = jsonobj.getString("key")
                     (activity as NavigationHost).navigateTo(AddReviewFragment(), false)
                 }
-//                var gson = GsonBuilder().create()
-//                var userStringList: List<String> = gson.fromJson(jsonobj.get("username"), object : TypeToken<List<String>>)
-//                gson.fromJson()
-//
+    //                var gson = GsonBuilder().create()
+    //                var userStringList: List<String> = gson.fromJson(jsonobj.get("username"), object : TypeToken<List<String>>)
+    //                gson.fromJson()
+    //
             }
-            //username android_user
+            //username android_user/android_user2/android_user3
             //password Twbmpwfma
-        })
+        }
 
         // Clear the error once more than 8 characters are typed.
         view.password1_edit_text.setOnKeyListener({ _, _, _ ->

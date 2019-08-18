@@ -1,21 +1,24 @@
 package com.example.happierhour
 
+import com.example.happierhour.MyApplication.Companion.user_token
 import java.util.HashMap
 
 import okhttp3.FormBody
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 
-class MyOkHttpRequest(client: OkHttpClient) {
+class MyOkHttpRequest(client: OkHttpClient) : AnkoLogger {
     internal var client = OkHttpClient()
 
     init {
         this.client = client
     }
 
-   val mytoken = "01a9f063a216f68483c45cf0bbe584bd7de109ac"
+
 
     fun POST(url: String, parameters: HashMap<String, String>) : String? {
         val builder = FormBody.Builder()
@@ -25,12 +28,21 @@ class MyOkHttpRequest(client: OkHttpClient) {
             builder.add(pair.key.toString(), pair.value.toString())
         }
 
-       val formBody = builder.build()
-       val request = Request.Builder()
-            .url(url)
-//            .header("Authorization", "Token $mytoken")
-            .post(formBody)
-            .build()
+        val formBody = builder.build()
+        var request : Request
+        if (user_token!=""){
+            request = Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Token $user_token")
+//                .addHeader("content-type", "application/json")
+                .post(formBody)
+                .build()
+        }else{
+            request = Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build()
+        }
 
 
         val response = client.newCall(request).execute()
@@ -39,11 +51,21 @@ class MyOkHttpRequest(client: OkHttpClient) {
     }
 
     fun GET(url: String): String? {
-        val request = Request.Builder()
-            .url(url)
-            .header("Authorization", "Token $mytoken")
-            .build()
+        var request : Request
+        info(user_token)
+        if (user_token!="") {
 
+            request = Request.Builder()
+                .url(url).get()
+                .addHeader("Authorization", "Token $user_token")
+//                .addHeader("content-type", "application/json")
+                .build()
+        }else{
+            request = Request.Builder()
+                .url(url)
+                .get()
+                .build()
+        }
         val response = client.newCall(request).execute()
         val bodystr = response.body()?.string()
         return bodystr
