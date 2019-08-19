@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import com.example.happierhour.MyApplication.Companion.bar_id
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import kotlinx.android.synthetic.main.see_bars.*
 import kotlinx.android.synthetic.main.see_bars.view.*
@@ -24,13 +25,18 @@ class SeeAllBarsFragment : Fragment(), AnkoLogger {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.see_bars, container, false)
+        var barList = ArrayList<Bar_Model>()
+        view.bar_list_view.setOnItemClickListener { adapterView, view, i, l ->
+            bar_id = barList[i].id_input.toInt()
+            (activity as NavigationHost).navigateTo(BarLandingPageFragment(), false)
+        }
 
         doAsync {
 
             val barsJson = getBarsAPI()
 
             uiThread {
-                val barList = getBarListFromJSONArray(barsJson)
+                barList = getBarListFromJSONArray(barsJson)
 
                 var adapter : BarCardListViewAdapter? = null
                 adapter = BarCardListViewAdapter(requireActivity(), barList)
@@ -43,13 +49,10 @@ class SeeAllBarsFragment : Fragment(), AnkoLogger {
     fun getBarsAPI() : JSONArray{
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
-
         val url = "http://happierhour.appspot.com/api/bars/"
-        info("a")
         val resp = request.GET(url)
-        info("b")
         val jarray = JSONArray(resp)
-        info("c")
+
         return jarray
     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:id="@+id/textView"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="Manage your Bars"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            android:id="@+id/manage_text"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="Choose which bar to manage"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            />
+    <ListView android:layout_width="match_parent" android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>

@@ -20,6 +20,10 @@ import org.jetbrains.anko.info
 import com.example.happierhour.MyApplication.Companion.user_token
 import com.google.gson.JsonObject
 import org.jetbrains.anko.uiThread
+import android.content.Intent
+import android.net.Uri
+import com.example.happierhour.MyApplication.Companion.user
+
 
 /**
  * Fragment representing the login screen for Shrine.
@@ -28,6 +32,8 @@ class LoginFragment : Fragment(), AnkoLogger {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        user_token = ""
+        user = User_Model("","","","","")
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.login_fragment, container, false)
         // Set an error if the password is less than 8 characters.
@@ -35,31 +41,21 @@ class LoginFragment : Fragment(), AnkoLogger {
             if (!isPasswordValid(password_edit_text.text!!)) {
                 password_text_input.error = "Password needs to be 8 characters or more."
             } else {
-                //clear the error
                 password_text_input.error = null
-
-                // Navigate to the next Fragment.
-    //                (activity as NavigationHost).navigateTo(SeeReviewFragment(), false)
-
 
                 doAsync {
                     val usernameInput = username_edit_text.getText().toString()
                     val passwordInput = password_edit_text.getText().toString()
                     val response = checkLoginIn(usernameInput, passwordInput)
-                    info(response.toString())
                     var returnedToken = ""
                     if(response.has("key")){
                         returnedToken = response.get("key").toString()
                     }
-                    info(usernameInput)
-                    info(passwordInput)
-                    info(user_token)
                     if (returnedToken != "") {
                         user_token = returnedToken
                         (activity as NavigationHost).navigateTo(LogoutFragment(), false)
                     }else{
                         uiThread {
-
                             view.login_status.text = "Unable to log in with provided credentials"
                         }
 
