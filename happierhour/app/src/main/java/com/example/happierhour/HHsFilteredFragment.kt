@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.hhs_filtered.*
 import org.json.JSONArray
 import com.example.happierhour.MyApplication.Companion.filtered_hhs
+import kotlinx.android.synthetic.main.hhs_filtered.view.*
 
 class HHsFilteredFragment() : Fragment() {
 
@@ -19,14 +20,12 @@ class HHsFilteredFragment() : Fragment() {
         val view = inflater.inflate(R.layout.hhs_filtered, container, false)
 
         var adapter : MyHHAdapter? = null
-        var hhList : ArrayList<HH_Model>
-        hhList = generateHappyHourData()
+        var List : ArrayList<HH_Model>
+        List = generateHappyHourData()
 
-        adapter = MyHHAdapter(requireActivity(), hhList)
+        adapter = MyHHAdapter(requireActivity(), List)
 
-        println(adapter == null)
-
-        hh_list.adapter = adapter
+        view.hh_list.adapter = adapter
 
 //        list.setOnItemClickListener { adapterView, view, i, l ->
 //            Toast.makeText(this, "Selected Emp is = "+ hhList.get(i).emp_name, Toast.LENGTH_SHORT).show()
@@ -45,6 +44,8 @@ class HHsFilteredFragment() : Fragment() {
         }
 
         filtered_hhs = ""
+
+        println(result)
 
         return result
     }
