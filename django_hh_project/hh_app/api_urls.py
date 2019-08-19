@@ -14,17 +14,22 @@ urlpatterns = [
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 
     #GET only, with exception of POSTing a Review
-    path('reviews/',ReviewsListCreateView.as_view()),
+    path('reviews/',ReviewsListView.as_view()),
     path('users/',UserListView.as_view()),
     path('bars/',BarListView.as_view()),
     path('features/',FeatureListView.as_view()),
     path('regions/',RegionListView.as_view()),
     path('happyhours/',HappyHourListView.as_view()),
 
+    #GET or POST when authenticated
+	path('reviews/create/',ReviewsListCreateView.as_view()),
+    path('bars/create/',BarListCreateView.as_view()),
+    path('bar/<int:bar_id>/happyhours/create',BarHappyHoursCreateView.as_view()),
+
     #GET only
     path('bar/<int:bar_id>/reviews/',BarReviewsView.as_view()),
     #GET list or POST a new happy hour (checks to make sure you are Manager first)
-    path('bar/<int:bar_id>/happyhours/',BarReviewsView.as_view()),
+    path('bar/<int:bar_id>/happyhours/',BarHappyHoursView.as_view()),
 
     #GET only, rely on token to get the affiliated values
     path('myreviews/',MyReviewsView.as_view()),

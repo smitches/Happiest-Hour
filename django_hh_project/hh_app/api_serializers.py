@@ -48,3 +48,21 @@ class FeatureSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Feature
 		fields = '__all__'
+
+class BarCreateSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Bar
+		fields = '__all__'
+		read_only_fields = ["manager","approved"]
+
+class ReviewCreateSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Reviews
+		fields = '__all__'
+		read_only_fields = ["reviewer"]
+
+class HappyHourCreateSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = HappyHour
+		fields = '__all__'
+		read_only_fields = ["bar"]
