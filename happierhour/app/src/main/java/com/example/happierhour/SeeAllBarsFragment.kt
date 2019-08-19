@@ -80,28 +80,5 @@ class SeeAllBarsFragment : Fragment(), AnkoLogger {
         info("c")
         return jarray
     }
-    fun getBarListFromJSONArray(jsonArrayInput:JSONArray): ArrayList<Bar_Model> {
-        val size = jsonArrayInput.length()
-        var barList = ArrayList<Bar_Model>()
-        for (i in 0 until size){
-            val barJson = jsonArrayInput.getJSONObject(i)
-            val feature_json_array = barJson.getJSONArray("features")
-            var feature_list = mutableListOf<Int>()
-            for (i in 0 until feature_json_array.length()){
-                feature_list.add(feature_json_array.get(i).toString().toInt())
-            }
-            val bar = Bar_Model(
-                barJson.get("id").toString().toInt(),
-                barJson.get("bar_name").toString(),
-                barJson.get("street_address").toString(),
-                barJson.get("phone_number").toString(),
-                barJson.get("approved").toString() == "true" || barJson.get("approved").toString() == "True",
-                barJson.get("region").toString().toInt(),
-                barJson.get("region").toString().toInt(),
-                feature_list
-            )
-            barList.add(bar)
-        }
-        return barList
-    }
+
 }
