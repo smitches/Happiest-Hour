@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.display_reviews.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import android.R.string
-import kotlinx.android.synthetic.main.display_reviews.review_list
+import kotlinx.android.synthetic.main.display_reviews.my_review_list
 import okhttp3.*
 import org.jetbrains.anko.*
 import org.json.JSONException
@@ -37,7 +37,7 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
                 var adapter : MyReviewAdapter? = null
                 var reviewList = ArrayList<Review_Model>()
 
-                val reviews_to_list = JSONArray(jsonarray)
+                val reviews_to_list = jsonarray
 
                 for (i in 0..(reviews_to_list.length() - 1)) {
                     val reviewObj = reviews_to_list.getJSONObject(i)
@@ -50,7 +50,7 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
 
                 println(adapter == null)
 
-                review_list.adapter = adapter
+                view.my_review_list.adapter = adapter
 
             }
         }

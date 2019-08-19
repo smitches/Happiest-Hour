@@ -26,7 +26,7 @@ class MyReviewAdapter (private var activity: Activity, private var items: ArrayL
         val viewHolder: ViewHolder
         if (convertView == null) {
             val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = inflater.inflate(R.layout.single_hh, null)
+            view = inflater.inflate(R.layout.single_review, null)
             viewHolder = ViewHolder(view)
             view.tag = viewHolder
         } else {
@@ -34,7 +34,7 @@ class MyReviewAdapter (private var activity: Activity, private var items: ArrayL
             viewHolder = view.tag as ViewHolder
         }
         var r = items[position]
-        viewHolder.lblRating?.text = r.r_id
+        viewHolder.lblRating?.text = r.star_count
         viewHolder.lblReviewer?.text = r.reviewer.first_name
         viewHolder.lblText?.text = r.review_text
 

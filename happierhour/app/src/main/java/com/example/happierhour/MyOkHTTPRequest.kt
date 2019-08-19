@@ -52,9 +52,7 @@ class MyOkHttpRequest(client: OkHttpClient) : AnkoLogger {
 
     fun GET(url: String): String? {
         var request : Request
-        println("dumb")
-        info(user_token)
-        info("in get request")
+
         if (user_token!="") {
             info("has user token")
             request = Request.Builder()
@@ -69,12 +67,9 @@ class MyOkHttpRequest(client: OkHttpClient) : AnkoLogger {
                 .url(url).get()
                 .build()
         }
-        info("about to call")
         val response = client.newCall(request).execute()
-        info("called")
 
         val bodystr = response.body()?.string()
-        info(bodystr)
 
         return bodystr
     }

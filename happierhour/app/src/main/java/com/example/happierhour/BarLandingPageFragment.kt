@@ -49,6 +49,7 @@ class BarLandingPageFragment(): Fragment() {
         }
 
         view.reviewbutton.setOnClickListener {
+            println("calling next fragment")
             (activity as NavigationHost).navigateTo(SeeReviewsOfBarFragment(),addToBackstack = true)
         }
 
