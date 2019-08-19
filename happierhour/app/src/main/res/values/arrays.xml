@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="daylist">
+        <item>@string/day1</item>
+        <item>@string/day2</item>
+        <item>@string/day3</item>
+        <item>@string/day4</item>
+        <item>@string/day5</item>
+        <item>@string/day6</item>
+        <item>@string/day7</item>
+    </string-array>
+
+</resources>

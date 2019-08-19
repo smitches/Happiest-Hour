@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_register.view.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import org.json.JSONArray
@@ -70,6 +69,10 @@ class LoginFragment : Fragment(), AnkoLogger {
         }
         view.sign_up_button.setOnClickListener {
             (activity as NavigationHost).navigateTo(RegisterFragmentFragment(),addToBackstack = false)
+        }
+
+        view.guest_button.setOnClickListener {
+            (activity as NavigationHost).navigateTo(GuestLandingPageFragement(),addToBackstack = false)
         }
 
         // Clear the error once more than 8 characters are typed.
