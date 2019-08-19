@@ -11,12 +11,14 @@ import kotlinx.android.synthetic.main.display_reviews.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import android.R.string
+import kotlinx.android.synthetic.main.display_reviews.review_list
 import okhttp3.*
 import org.jetbrains.anko.*
 import org.json.JSONException
 import java.io.IOException
 
 
+//getting all reviews for a user
 class SeeReviewFragment : Fragment(), AnkoLogger {
 
     override fun onCreateView(
@@ -24,44 +26,49 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.display_reviews, container, false)
 
-        view.button.setOnClickListener {
-            info("good")
-            doAsync {
-                info("good2")
-                val gotresponse = fetchInfo()
-                val jsonarray = JSONArray(gotresponse)
-                uiThread {
-                    reviews.text = jsonarray.toString()
 
+        doAsync {
 
+            val gotresponse = fetchReviews()
+            val jsonarray = JSONArray(gotresponse)
+
+            uiThread {
+
+                var adapter : MyHHAdapter? = null
+                var reviewList : ArrayList<Review_Model>
+
+                val reviews_to_list = JSONArray(MyApplication.filtered_hhs)
+
+                for (i in 0..(reviews_to_list.length() - 1)) {
+                    val reviewObj = reviews_to_list.getJSONObject(i)
+                    var review: Review_Model = Review_Model(reviewObj.get("id").toString(),
+                        reviewObj.getJSONObject("reviewer"), reviewObj.getJSONObject("bar"),
+                        reviewObj.get("star_count").toString(), reviewObj.get("review_text").toString())
+
+                    reviewList.add(review)
                 }
-            }
 
+                adapter = MyHHAdapter(requireActivity(), reviewList)
+
+                println(adapter == null)
+
+                review_list.adapter = adapter
+
+            }
         }
+
+
 
         return view
     }
 
-//    private fun fetchInfo(): String {
-//        val url = "https://apad19.appspot.com/list/"
-//
-//        val client = OkHttpClient()
-//        val request = Request.Builder()
-//            .url(url)
-////            .header("User-Agent", "Android")
-//            .build()
-//        val response = client.newCall(request).execute()
-//        val bodystr =  response.body().string() // this can be consumed only once
-//
-//        return bodystr
-//    }
 
-    private fun fetchInfo(): String? {
+    private fun fetchReviews(): String? {
 
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
 
-        val url = "http://happierhour.appspot.com/api/reviews"
+        val url = "http://happierhour.appspot.com/api/myreviews/"
 
         return request.GET(url)
 

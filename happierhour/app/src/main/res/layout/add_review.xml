@@ -6,6 +6,63 @@
               android:layout_height="match_parent"
               tools:context=".SeeReviewFragment">
 
+    <TextView
+            android:id="@+id/TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create a Review"
+            android:layout_marginBottom="40dp"
+            android:textSize="28sp">
+    </TextView>
+
+    <TextView
+            android:id="@+id/selectBarText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select A Bar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:textSize="12sp">
+    </TextView>
+
+    <Spinner
+            android:id="@+id/SpinnerBars"
+            android:layout_height="wrap_content"
+            android:prompt="@string/selectbar"
+            android:layout_width="fill_parent"
+            android:layout_marginBottom="20dp"
+            android:entries="@array/barList">
+    </Spinner>
+
+    <TextView
+            android:id="@+id/selectStarText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating:"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:textSize="12sp">
+    </TextView>
+
+    <Spinner
+            android:id="@+id/SpinnerStar"
+            android:layout_height="wrap_content"
+            android:prompt="@string/selectbar"
+            android:layout_width="fill_parent"
+            android:layout_marginBottom="20dp"
+            android:entries="@array/starList">
+    </Spinner>
+
+    <EditText
+            android:id="@+id/EditTextReviewBody"
+            android:layout_height="wrap_content"
+            android:hint="Write Review Here"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:layout_width="fill_parent">
+    </EditText>
+
+
     <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"

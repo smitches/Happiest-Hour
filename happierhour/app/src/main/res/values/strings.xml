@@ -18,7 +18,16 @@
     <string name="day7">Sunday</string>
     <string name="selectday">Select Day</string>
 
+    <string name="selectbar">Select Bar</string>
+
     <string name="drinks">Drinks Discounted?</string>
     <string name="food">Food Discounted?</string>
+
+    <string name="star1">1</string>
+    <string name="star2">2</string>
+    <string name="star3">3</string>
+    <string name="star4">4</string>
+    <string name="star5">5</string>
+    <string name="star0">0</string>
 
 </resources>

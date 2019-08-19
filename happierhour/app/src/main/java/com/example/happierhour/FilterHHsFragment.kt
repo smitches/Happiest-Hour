@@ -17,6 +17,7 @@ import org.json.JSONObject
 import kotlinx.android.synthetic.main.filter_hhs.*
 import kotlinx.android.synthetic.main.filter_hhs.view.*
 import kotlinx.android.synthetic.main.filter_hhs.view.button
+import com.example.happierhour.MyApplication.Companion.filtered_hhs
 
 
 class FilterHHsFragment : Fragment() {
@@ -76,112 +77,104 @@ class FilterHHsFragment : Fragment() {
             val drinksDiscounted: Boolean = checkDrink.isChecked()
             val foodsDiscounted: Boolean = checkFood.isChecked()
 
+
+
+            val contents: HashMap<String, String> = HashMap<String, String>()
+
+            if (selectedDay != "") {
+                var dayString: String = ""
+                if (selectedDay == "Monday") {
+                    dayString = "M"
+                } else if (selectedDay == "Tuesday") {
+                    dayString = "T"
+                } else if (selectedDay == "Wednesday") {
+                    dayString = "W"
+                } else if (selectedDay == "Thursday") {
+                    dayString = "Th"
+                } else if (selectedDay == "Friday") {
+                    dayString = "F"
+                } else if (selectedDay == "Saturday") {
+                    dayString = "Sa"
+                } else if (selectedDay == "Tuesday") {
+                    dayString = "Su"
+                }
+                contents.put("day", dayString)
+            }
+
+            if (selectedRegion != "") {
+
+                //get region id
+                doAsync {
+
+                    val response = getRegions()
+                    val jsonarray = JSONArray(response)
+
+                    var regionId : String = ""
+                    for (i in 0..(jsonarray.length() - 1)) {
+                        val region = jsonarray.getJSONObject(i)
+                        if (region.get("region_name") == selectedRegion) {
+                            regionId = region.get("id").toString()
+                        }
+                    }
+
+                    uiThread {
+                        contents.put("region_id", regionId)
+                    }
+
+                }
+
+            }
+
+            if (selectedFeature != "") {
+
+                //get feature id
+                doAsync {
+                    val response = getFeatures()
+                    val jsonarray = JSONArray(response)
+
+                    var featureId : String = ""
+                    for (i in 0..(jsonarray.length() - 1)) {
+                        val feature = jsonarray.getJSONObject(i)
+                        if (feature.get("feature_name") == selectedFeature) {
+                            featureId = feature.get("id").toString()
+                        }
+                    }
+
+                    uiThread {
+                        contents.put("feature_ids", "[{\"feature_id\":\"$featureId\"}]")
+                    }
+
+                }
+
+            }
+
+            if (minStarCount != "") {
+                contents.put("star_count", minStarCount)
+
+            }
+
+            if (drinksDiscounted == true) {
+                contents.put("drinks", "true")
+
+            }
+
+            if (foodsDiscounted == true) {
+                contents.put("food", "true")
+
+            }
+
+            println(contents)
+
             doAsync {
-
-                val contents: HashMap<String, String> = HashMap<String, String>()
-
-                if (selectedDay != "") {
-                    var dayString: String = ""
-                    if (selectedDay == "Monday") {
-                        dayString = "M"
-                    } else if (selectedDay == "Tuesday") {
-                        dayString = "T"
-                    } else if (selectedDay == "Wednesday") {
-                        dayString = "W"
-                    } else if (selectedDay == "Thursday") {
-                        dayString = "Th"
-                    } else if (selectedDay == "Friday") {
-                        dayString = "F"
-                    } else if (selectedDay == "Saturday") {
-                        dayString = "Sa"
-                    } else if (selectedDay == "Tuesday") {
-                        dayString = "Su"
-                    }
-                    contents.put("day", dayString)
-                }
-
-                if (selectedRegion != "") {
-
-                    //get region id
-                    doAsync {
-
-                        val response = getRegions()
-                        val jsonarray = JSONArray(response)
-
-                        var regionId : String = ""
-                        for (i in 0..(jsonarray.length() - 1)) {
-                            val region = jsonarray.getJSONObject(i)
-                            if (region.get("region_name") == selectedRegion) {
-                                regionId = region.get("id").toString()
-                            }
-                        }
-
-                        uiThread {
-                            contents.put("region_id", regionId)
-                        }
-
-                    }
-
-                }
-
-                if (selectedFeature == "") {
-
-                    //get feature id
-                    doAsync {
-                        val response = getFeatures()
-                        val jsonarray = JSONArray(response)
-
-                        var featureId : String = ""
-                        for (i in 0..(jsonarray.length() - 1)) {
-                            val feature = jsonarray.getJSONObject(i)
-                            if (feature.get("feature_name") == selectedFeature) {
-                                featureId = feature.get("id").toString()
-                            }
-                        }
-
-                        uiThread {
-                            // change to a list of items (basically a string that concatentes
-                            // over and over based on the
-                            // contents.put("feature_ids", featureId)
-                        }
-
-                    }
-
-                }
-
-                if (minStarCount != "") {
-                    contents.put("star_count", minStarCount)
-
-                }
-
-                if (drinksDiscounted == true) {
-                    contents.put("drinks", "true")
-
-                }
-
-                if (foodsDiscounted == true) {
-                    contents.put("food", "true")
-
-                }
-
-                println(contents)
-
                 val responses = findHappyHours(contents)
-                println(responses)
-                val jsonarray = JSONArray(responses)
+                filtered_hhs = responses
 
                 uiThread {
 
-                    // add this
-//                    for (i in 0..(jsonarray.length() - 1)) {
-//                        val feature = jsonarray.getJSONObject(i)
-//                        if (feature.get("feature_name") == selectedFeature) {
-//                            featureId = feature.get("id").toString()
-//                        }
-//                    }
-
+                    (activity as NavigationHost).navigateTo(HHsFilteredFragment(),addToBackstack = true)
                 }
             }
+
 
         }
         return view
@@ -189,7 +182,6 @@ class FilterHHsFragment : Fragment() {
 
         private fun getRegions(): String? {
 
-            println("Im here!")
             val client = OkHttpClient()
             val request = MyOkHttpRequest(client)
 
@@ -218,10 +210,9 @@ class FilterHHsFragment : Fragment() {
             val client = OkHttpClient()
             val request = MyOkHttpRequest(client)
 
-            val url = "http://happierhour.appspot.com/api/features/"
+            val url = "http://happierhour.appspot.com/api/happyhours/search/"
 
             val response_body = request.POST(url, contents)
-            print(response_body)
 
             return response_body
         }

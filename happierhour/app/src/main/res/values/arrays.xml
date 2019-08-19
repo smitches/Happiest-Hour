@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="daylist">
+        <item>""</item>
         <item>@string/day1</item>
         <item>@string/day2</item>
         <item>@string/day3</item>
@@ -8,6 +9,28 @@
         <item>@string/day5</item>
         <item>@string/day6</item>
         <item>@string/day7</item>
+    </string-array>
+
+    <string-array name="barList">
+        <item>""</item>
+    </string-array>
+
+    <string-array name="regionList">
+        <item>""</item>
+    </string-array>
+
+    <string-array name="featureList">
+        <item>""</item>
+    </string-array>
+
+    <string-array name="starList">
+        <item>""</item>
+        <item>@string/star0</item>
+        <item>@string/star1</item>
+        <item>@string/star2</item>
+        <item>@string/star3</item>
+        <item>@string/star4</item>
+        <item>@string/star5</item>
     </string-array>
 
 </resources>
