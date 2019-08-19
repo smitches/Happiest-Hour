@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.happierhour.MyApplication.Companion.bar_id
 import kotlinx.android.synthetic.main.hhs_filtered.*
 import org.json.JSONArray
 import com.example.happierhour.MyApplication.Companion.filtered_hhs
 import kotlinx.android.synthetic.main.hhs_filtered.view.*
+import kotlinx.android.synthetic.main.see_bars_hh.*
 
 class HHsFilteredFragment() : Fragment() {
 
@@ -27,9 +29,13 @@ class HHsFilteredFragment() : Fragment() {
 
         view.hh_list.adapter = adapter
 
-//        list.setOnItemClickListener { adapterView, view, i, l ->
-//            Toast.makeText(this, "Selected Emp is = "+ hhList.get(i).emp_name, Toast.LENGTH_SHORT).show()
-//        }
+        view.hh_list.setOnItemClickListener { adapterView, view, i, l ->
+
+            bar_id = List.get(i).hh_bar.id_input.toInt()
+
+            (activity as NavigationHost).navigateTo(BarLandingPageFragment(),addToBackstack = true)
+
+        }
         return view
     }
 

@@ -1,30 +1,25 @@
 package com.example.happierhour
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.happierhour.MyApplication.Companion.bar_id
 import kotlinx.android.synthetic.main.display_reviews.*
-import kotlinx.android.synthetic.main.display_reviews.view.*
+import kotlinx.android.synthetic.main.single_review.*
+import okhttp3.OkHttpClient
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import org.json.JSONArray
-import org.json.JSONObject
-import android.R.string
-import kotlinx.android.synthetic.main.display_reviews.review_list
-import okhttp3.*
-import org.jetbrains.anko.*
-import org.json.JSONException
-import java.io.IOException
 
-
-//getting all reviews for a user
-class SeeReviewFragment : Fragment(), AnkoLogger {
+class SeeReviewsOfBarFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.display_reviews, container, false)
+        val view = inflater.inflate(R.layout.see_bars_reviews, container, false)
+
 
 
         doAsync {
@@ -51,6 +46,7 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
                 println(adapter == null)
 
                 review_list.adapter = adapter
+                lbl_bar_name.text = getReviewFromJSONObject(reviews_to_list.getJSONObject(1)).bar.bar_name
 
             }
         }
@@ -64,11 +60,10 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
 
-        val url = "http://happierhour.appspot.com/api/myreviews/"
+        val url = "http://happierhour.appspot.com/api/bar/$bar_id/reviews"
 
         return request.GET(url)
 
     }
 
 }
-
