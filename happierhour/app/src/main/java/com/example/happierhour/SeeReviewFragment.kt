@@ -35,20 +35,21 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
             uiThread {
 
                 var adapter : MyHHAdapter? = null
-                var reviewList : ArrayList<Review_Model>
+                var reviewList = ArrayList<Review_Model>()
 
                 val reviews_to_list = JSONArray(MyApplication.filtered_hhs)
 
                 for (i in 0..(reviews_to_list.length() - 1)) {
                     val reviewObj = reviews_to_list.getJSONObject(i)
                     var review: Review_Model = Review_Model(reviewObj.get("id").toString(),
-                        reviewObj.getJSONObject("reviewer"), reviewObj.getJSONObject("bar"),
+                        getUserFromJSONObject(reviewObj.getJSONObject("reviewer")),
+                        getBarFromJSONObject(reviewObj.getJSONObject("bar")),
                         reviewObj.get("star_count").toString(), reviewObj.get("review_text").toString())
 
                     reviewList.add(review)
                 }
 
-                adapter = MyHHAdapter(requireActivity(), reviewList)
+                //adapter = MyReviewAdapter(requireActivity(), reviewList)
 
                 println(adapter == null)
 
