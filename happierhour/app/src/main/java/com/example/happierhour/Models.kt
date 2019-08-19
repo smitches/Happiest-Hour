@@ -4,7 +4,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class Bar_Model (val id_input: String, val bar_name: String, val street_address: String,val phone_number: String,
-                 val approved: Boolean, manager: User_Model, region: Region_Model, features: ArrayList<Feature_Model>) {
+                 val approved: Boolean, val manager: User_Model, val region: Region_Model, val features: ArrayList<Feature_Model>) {
 }
 
 class User_Model (val id_input: String, val username: String, val first_name: String,

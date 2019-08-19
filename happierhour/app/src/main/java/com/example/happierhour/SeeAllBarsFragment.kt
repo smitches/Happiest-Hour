@@ -25,44 +25,16 @@ class SeeAllBarsFragment : Fragment(), AnkoLogger {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.see_bars, container, false)
 
-//        view.next_button.setOnClickListener {
-//
-//        }
-        info(1)
         doAsync {
 
-            info(2)
             val barsJson = getBarsAPI()
 
             uiThread {
-                var barListView = view.bar_list_view
-                info(3)
                 val barList = getBarListFromJSONArray(barsJson)
-                info(4)
-                val listItems = mutableListOf<String>()
-                info(5)
-                for (i in 0 until barList.size) {
-                    val bar = barList[i]
-                    info(6)
-                    listItems.add(bar.bar_name)
-                }
-                info(7)
-                info(barList)
 
-
-                info(8)
-                val myContext = context!!
-                info(myContext)
-                info(android.R.layout.simple_list_item_1)
-                info(listItems)
-//                val adapter = ArrayAdapter<String>(myContext,android.R.layout.simple_list_item_1,listItems)
-//                barListView.adapter = adapter
                 var adapter : BarCardListViewAdapter? = null
-//                adapter = BarCardListViewAdapter(myContext as Activity, barList)
                 adapter = BarCardListViewAdapter(requireActivity(), barList)
-
-                bar_list_view.adapter = adapter
-                info(9)
+                view.bar_list_view.adapter = adapter
             }
 
         }

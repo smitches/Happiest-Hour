@@ -21,16 +21,16 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 class BarCardListViewAdapter (private var activity: Activity, private var items: ArrayList<Bar_Model>) :  BaseAdapter() {
     private class ViewHolder(row: View?) {
         var lblName: TextView? = null
-//        var lblDesignation: TextView? = null
-//        var imgEmp: ImageView? = null
-//        var lblSalary: TextView? = null
+        var lblAddress: TextView? = null
+        var lblDays: TextView? = null
+        var lblRegion: TextView? = null
 
         init {
-            this.lblName = row?.findViewById(R.id.lbl_name)
+            //this.lblName = row?.findViewById(R.id.lbl_name)
             this.lblName = row?.findViewById<TextView>(R.id.lbl_name)
-//            this.lblDesignation = row?.findViewById<TextView>(R.id.lbl_designation)
-//            this.imgEmp = row?.findViewById<ImageView>(R.id.img_emp)
-//            this.lblSalary = row?.findViewById<TextView>(R.id.lbl_salary)
+            this.lblAddress = row?.findViewById<TextView>(R.id.lbl_address)
+            this.lblDays = row?.findViewById<TextView>(R.id.lbl_days)
+            this.lblRegion = row?.findViewById<TextView>(R.id.lbl_region)
         }
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -47,8 +47,8 @@ class BarCardListViewAdapter (private var activity: Activity, private var items:
         }
         var bar = items[position]
         viewHolder.lblName?.text = bar.bar_name
-//        viewHolder.lblDesignation?.text = emp.emp_designation
-//        viewHolder.lblSalary?.text = emp.emp_salary
+        viewHolder.lblAddress?.text = bar.street_address
+        viewHolder.lblRegion?.text = bar.region.reg_name
 //        viewHolder.imgEmp?.setImageResource(emp.emp_photo!!)
 
         return view as View
