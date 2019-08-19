@@ -33,7 +33,7 @@ class LogoutFragment : Fragment(), AnkoLogger {
 
         }
 
-        view.logout_button.setOnClickListener({
+        view.confirm_logout_button.setOnClickListener({
             doAsync {
                 logoutAPI()
                 (activity as NavigationHost).navigateTo(LoginFragment(), false)

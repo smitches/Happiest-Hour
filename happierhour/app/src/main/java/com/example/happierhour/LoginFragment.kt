@@ -53,7 +53,7 @@ class LoginFragment : Fragment(), AnkoLogger {
                     }
                     if (returnedToken != "") {
                         user_token = returnedToken
-                        (activity as NavigationHost).navigateTo(LogoutFragment(), false)
+                        (activity as NavigationHost).navigateTo(GuestLandingPageFragement(), false)
                     }else{
                         uiThread {
                             view.login_status.text = "Unable to log in with provided credentials"

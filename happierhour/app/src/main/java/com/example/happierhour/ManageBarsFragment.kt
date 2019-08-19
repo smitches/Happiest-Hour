@@ -21,11 +21,11 @@ class ManageBarsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
+        println(10)
         val view = inflater.inflate(R.layout.manage_bars, container, false)
-        view.manage_text.text = view.manage_text.text + ": " + user.username
+        view.manage_text.text = "Manage your bars: " + user.username
         var barList = ArrayList<Bar_Model>()
-        view.bar_list_view.setOnItemClickListener { adapterView, view, i, l ->
+        view.my_bar_list_view.setOnItemClickListener { adapterView, view, i, l ->
             MyApplication.bar_id = barList[i].id_input.toInt()
             (activity as NavigationHost).navigateTo(BarLandingPageFragment(), false)
         }
@@ -36,10 +36,11 @@ class ManageBarsFragment : Fragment() {
 
             uiThread {
                 barList = getBarListFromJSONArray(barsJson)
-
+                println(barList)
                 var adapter : BarCardListViewAdapter? = null
                 adapter = BarCardListViewAdapter(requireActivity(), barList)
-                view.bar_list_view.adapter = adapter
+                view.my_bar_list_view.adapter = adapter
+
             }
 
         }

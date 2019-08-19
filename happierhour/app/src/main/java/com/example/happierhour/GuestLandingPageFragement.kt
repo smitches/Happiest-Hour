@@ -29,7 +29,9 @@ class GuestLandingPageFragement(): Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        println("in guest")
         if (user_token != ""){
+
             val view = inflater.inflate(R.layout.login_landing_page,container,false)
             doAsync {
                 user = logged_in_user()
@@ -38,7 +40,7 @@ class GuestLandingPageFragement(): Fragment() {
                 }
             }
             view.logout_button.setOnClickListener {
-                (activity as NavigationHost).navigateTo(LogoutFragment(), false)
+                (activity as NavigationHost).navigateTo(LogoutFragment(), true)
             }
 
             view.filterbutton.setOnClickListener {
@@ -56,6 +58,7 @@ class GuestLandingPageFragement(): Fragment() {
             view.create_review_button.setOnClickListener {
                 (activity as NavigationHost).navigateTo(AddReviewFragment(),addToBackstack = true)
             }
+            return view
         }else{
             val view = inflater.inflate(R.layout.guest_landing_page, container, false)
 
@@ -70,9 +73,9 @@ class GuestLandingPageFragement(): Fragment() {
             view.seeallbutton.setOnClickListener {
                 (activity as NavigationHost).navigateTo(SeeAllBarsFragment(),addToBackstack = true)
             }
+            return view
         }
 
-        return view
     }
 
     fun logged_in_user() : User_Model{

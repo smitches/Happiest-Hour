@@ -7,6 +7,7 @@ class MyApplication : Application() {
         var user_token = ""
         var filtered_hhs: String? = ""
         var bar_id: Int = 0
+        var user = User_Model("","","","","")
     }
 
 }
