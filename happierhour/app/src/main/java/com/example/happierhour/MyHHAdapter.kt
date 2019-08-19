@@ -45,7 +45,7 @@ class MyHHAdapter (private var activity: Activity, private var items: ArrayList<
         viewHolder.lblDate?.text = hh.hh_day
         viewHolder.lblStart?.text = hh.hh_start_time
         viewHolder.lblEnd?.text = hh.hh_end_time
-        viewHolder.lblBar?.text = hh.hh_bar
+        viewHolder.lblBar?.text = hh.hh_bar.bar_name
         viewHolder.lblDrinks?.text = hh.hh_drinks
         viewHolder.lblFoods?.text = hh.hh_food
         viewHolder.lblMenu?.text = hh.hh_menu

@@ -39,19 +39,8 @@ class HHsFilteredFragment() : Fragment() {
 
         val hhs_to_list = JSONArray(filtered_hhs)
 
-        for (i in 0..(hhs_to_list.length() - 1)) {
-            val happyHour = hhs_to_list.getJSONObject(i)
-            var hh: HH_Model = HH_Model()
-            hh.hh_id = happyHour.get("id").toString().toInt()
-            hh.hh_day = happyHour.get("day_of_week").toString()
-            hh.hh_start_time = happyHour.get("start_time").toString()
-            hh.hh_end_time = happyHour.get("end_time").toString()
-            var bar = happyHour.getJSONObject("bar")
-            hh.hh_bar = bar.get("bar_name").toString()
-            hh.hh_drinks = happyHour.get("drinks").toString()
-            hh.hh_food = happyHour.get("food").toString()
-            hh.hh_menu = happyHour.get("menu_pdf").toString()
-
+        for (i in 0 until hhs_to_list.length()) {
+            val hh = getHHFromJSONObject(hhs_to_list.getJSONObject(i))
             result.add(hh)
         }
 
