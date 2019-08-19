@@ -80,10 +80,14 @@ class UserLoggedInView(generics.ListAPIView):
 
 class ReviewsListCreateView(generics.ListCreateAPIView):
 	queryset = Reviews.objects.all()
-	serializer_class = ReviewSerializer
+	serializer_class = ReviewCreateSerializer
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 	def perform_create(self,serializer):
 		serializer.save(reviewer = self.request.user)
+
+class ReviewsListView(generics.ListAPIView):
+	queryset = Reviews.objects.all()
+	serializer_class = ReviewSerializer
 
 class ReviewView(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = ReviewSerializer
@@ -105,12 +109,16 @@ class BarReviewsView(generics.ListAPIView):
 
 
 
-class BarListView(generics.ListCreateAPIView):
+class BarListCreateView(generics.ListCreateAPIView):
     queryset = Bar.objects.all()
-    serializer_class = BarSerializer
+    serializer_class = BarCreateSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def perform_create(self,serializer):
     	serializer.save(manager = self.request.user)
+
+class BarListView(generics.ListAPIView):
+	queryset = Bar.objects.all()
+	serializer_class = BarSerializer
 
 class BarView(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = BarSerializer
@@ -143,8 +151,15 @@ class MyHappyHoursView(generics.ListAPIView):
 	def get_queryset(self):
 		return HappyHour.objects.filter(bar__manager__id = self.request.user.id)
 
-class BarHappyHoursView(generics.ListCreateAPIView):
+class BarHappyHoursView(generics.ListAPIView):
 	serializer_class = HappyHourSerializer
+	# permission_classes = [IsManagerOrReadOnly]
+	def get_queryset(self):
+		bar_id = self.kwargs.get('bar_id')
+		return HappyHour.objects.filter(bar__id = bar_id)
+
+class BarHappyHoursCreateView(generics.ListCreateAPIView):
+	serializer_class = HappyHourCreateSerializer
 	# permission_classes = [IsManagerOrReadOnly]
 	def get_queryset(self):
 		bar_id = self.kwargs.get('bar_id')
@@ -154,6 +169,7 @@ class BarHappyHoursView(generics.ListCreateAPIView):
 		if self.request.user != Bar.objects.get(id=bar_id).manager:
 			raise PermissionDenied
 		serializer.save(bar = Bar.objects.get(id=bar_id))
+
 
 @api_view(['GET','POST'])
 def happyhour_search(request):
