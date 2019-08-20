@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.happierhour.MyApplication.Companion.user
 import com.example.happierhour.MyApplication.Companion.user_token
 import kotlinx.android.synthetic.main.logout_fragment.*
 import kotlinx.android.synthetic.main.logout_fragment.view.*
@@ -43,18 +44,7 @@ class LogoutFragment : Fragment(), AnkoLogger {
         return view
     }
     fun getUsername() :  String{
-        val client = OkHttpClient()
-        val request = MyOkHttpRequest(client)
-
-        val url = "http://happierhour.appspot.com/api/whoami/"
-
-        val contents:HashMap<String,String> = HashMap<String,String>()
-        info(user_token)
-        val response_body = JSONArray(request.GET(url))
-        val username = response_body.getJSONObject(0).get("username").toString()
-        info(response_body)
-
-        return username
+        return user.username
     }
     fun logoutAPI(){
         val client = OkHttpClient()

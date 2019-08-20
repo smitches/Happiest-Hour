@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:id="@+id/appTextView"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="[bar name]"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            android:id="@+id/managerBarTextView"/>
+    <Button
+            android:text="See Reviews"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/managerSeeReviewsButton"/>
+
+    <Button
+            android:text="See Menu"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/managerSeeMenuButton"/>
+
+    <Button
+            android:text="See HappyHours"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/managerSeeHHsButton"/>
+    <Button
+            android:text="Add HappyHours"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/managerAddHHButton"/>
+    <Button
+            android:text="Delete Bar"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/managerDeleteBarButton"/>
+
+</LinearLayout>

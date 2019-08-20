@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.happierhour.MyApplication.Companion.bar_id
+import com.example.happierhour.MyApplication.Companion.myBarIds
 import kotlinx.android.synthetic.main.add_review.view.*
 import okhttp3.OkHttpClient
 import org.jetbrains.anko.doAsync
@@ -21,46 +22,108 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.bar_landing_page.*
 import kotlinx.android.synthetic.main.bar_landing_page.view.*
 import kotlinx.android.synthetic.main.guest_landing_page.view.*
+import kotlinx.android.synthetic.main.manager_bar_landing_page.view.*
 
 class BarLandingPageFragment(): Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.bar_landing_page, container, false)
+        println("in bar landing page")
+        if (bar_id in myBarIds){
+            println(1)
+            val view = inflater.inflate(R.layout.manager_bar_landing_page, container, false)
+            doAsync {
 
-        doAsync {
+                val response = getHHs()
+                val jsonarray = JSONArray(response)
 
-            val response = getHHs()
-            val jsonarray = JSONArray(response)
+                uiThread {
+                    val happyhour = jsonarray.getJSONObject(0)
+                    val menu = happyhour.get("menu_pdf").toString()
 
-            uiThread {
-                val happyhour = jsonarray.getJSONObject(0)
-                val menu = happyhour.get("menu_pdf").toString()
+                    view.managerSeeMenuButton.setOnClickListener {
+                        val uri = Uri.parse(menu) // missing 'http://' will cause crashed
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        startActivity(intent)
+                    }
 
-                view.menubutton.setOnClickListener {
-                    val uri = Uri.parse(menu) // missing 'http://' will cause crashed
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
+                    view.managerBarTextView.text = getHHFromJSONObject(happyhour).hh_bar.bar_name
                 }
-
-                barTextView.text = getHHFromJSONObject(happyhour).hh_bar.bar_name
             }
-        }
+            println(2)
+            view.managerSeeReviewsButton.setOnClickListener {
+                println("calling next fragment")
+                (activity as NavigationHost).navigateTo(SeeReviewsOfBarFragment(), addToBackstack = true)
+            }
 
-        view.reviewbutton.setOnClickListener {
-            println("calling next fragment")
-            (activity as NavigationHost).navigateTo(SeeReviewsOfBarFragment(),addToBackstack = true)
-        }
+            view.managerSeeHHsButton.setOnClickListener {
+                println(11)
+                (activity as NavigationHost).navigateTo(SeeHHsOfBarFragment(), addToBackstack = true)
+            }
+            view.managerAddHHButton.setOnClickListener {
+//                TODO ADD HAPPY HOUR TO BAR
+//                (activity as NavigationHost).navigateTo(AddHHToBarFragment(), addToBackstack = true)
+            }
+            println(3)
+            view.managerDeleteBarButton.setOnClickListener {
+                doAsync {
 
-        view.hhsbutton.setOnClickListener {
-            (activity as NavigationHost).navigateTo(SeeHHsOfBarFragment(),addToBackstack = true)
+                    deleteBar()
+                }
+                (activity as NavigationHost).navigateTo(ManageBarsFragment(), addToBackstack = false)
+            }
+            println(4)
+            return view
         }
+        else {
 
-        return view
+
+            val view = inflater.inflate(R.layout.bar_landing_page, container, false)
+
+            doAsync {
+
+                val response = getHHs()
+                val jsonarray = JSONArray(response)
+
+                uiThread {
+                    val happyhour = jsonarray.getJSONObject(0)
+                    val menu = happyhour.get("menu_pdf").toString()
+
+                    view.menubutton.setOnClickListener {
+                        val uri = Uri.parse(menu) // missing 'http://' will cause crashed
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        startActivity(intent)
+                    }
+
+                    barTextView.text = getHHFromJSONObject(happyhour).hh_bar.bar_name
+                }
+            }
+
+            view.reviewbutton.setOnClickListener {
+                println("calling next fragment")
+                (activity as NavigationHost).navigateTo(SeeReviewsOfBarFragment(), addToBackstack = true)
+            }
+
+            view.hhsbutton.setOnClickListener {
+                (activity as NavigationHost).navigateTo(SeeHHsOfBarFragment(), addToBackstack = true)
+            }
+
+            return view
+        }
     }
 
+    private fun deleteBar(){
+        val client = OkHttpClient()
+        val request = MyOkHttpRequest(client)
 
+        val url = "http://happierhour.appspot.com/api/bar/$bar_id/delete/"
+//        happierhour.appspot.com
+        println(url)
+        val response_body = request.GET(url)
+        println(response_body)
+
+    }
     private fun getHHs(): String? {
 
         val client = OkHttpClient()
