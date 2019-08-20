@@ -1,0 +1,127 @@
+{%extends 'hh_app/base.html'%}
+
+{% load static %}
+
+{% block info %}
+<div class="p-2">
+	
+<h1>About Our App!</h3>
+<br>
+
+<h2>Happier Hour - A Narrative</h2>
+<p>	
+	We are in a rigorous MS program at the University of Texas at Austin. The MS in IT & Management program in 
+	the McCombs School of Business is heavily interested in the full development of their students to begin successful
+	careers. We achieve this by emphasizing the business context without losing focus on the technical knowledge 
+	necessary to contribute in the tech industry.
+	<br><br>
+	So begin the 2019 Summer Semester. Here's what we know about the Advanced Programming and Application Development
+	course:
+	<ul>
+		<li>
+			The semester is 6 weeks long
+		</li>
+		<li>
+			Learn Several Concepts
+		</li>
+		<ol>
+			<li>Python Programming (for students who have not been exposed)</li>
+			<li>Git version control for paired programming project</li>
+			<li>Database Concepts</li>
+			<li>Client-Server Architecture</li>
+			<li>Security, Authorization, Permissions</li>
+			<li>Web Application Development</li>
+			<li>Deployment on Google Cloud Platform</li>
+			<li>API Concepts</li>
+			<li>Android App Development</li>
+		</ol>
+		<li>Determine an Application to Develop</li>
+		<li>
+			Create a Web App using Python's Django framework
+		</li>
+		<ol>
+			<li>
+				Expose API's on this Web App
+			</li>
+			<li>Deploy it on Google App Engine, such that it can be accessed via <a href="happierhour.appspot.com">happierhour.appspot.com</a></li>
+			<li>Support file management system and implement connection with Google Storage</li>
+		</ol>
+		<li>
+			Develop an Android app in Kotlin
+		</li>
+		<ol>
+			<li>Connect it to the API's</li>
+			<li>Utilize Token Authentication</li>
+			<li>Support Main Functionality of the WebApp in a Mobile Native App</li>
+			<li>Deploy the APK to be downloaded by the public <a href="http://happierhour.appspot.com/look/app-release.apk">Click Here to Download</a></li>
+		</ol>
+		<li>Finish on time!</li>
+	</ul>
+	<br>
+	<h3>
+		But We Care About Our App!
+	</h3>
+	Our idea was too great. Yelp is too restaurant friendly and old. Google Maps is solving too many problems
+	in one app and cannot tailor the experience extremely well for a niche purpose. We are young professionals
+	who care about making sure we find the best drinks and the best food deals at Happy Hours near us! We want
+	a better way to search for, and filter through bars and restaurants that have Happy Hour deals.
+	<br>
+	<br>
+	Our platform is the key to having the Happiest Happy Hours
+	<br>
+	<br>
+	You can access our <a href="github.com/smitches/happiesthour">Github Repository</a> or visit our 
+	<a href="happierhour.appspot.com">web application</a>. And if you have an Android Phone, please download
+	our <a href="happierhour.appspot.com/look/app-release.apk">APK file</a> to test out our functionality.
+</p>
+
+<br>
+<br>
+<div class="ourcontent">
+<h2>
+	WebApp functionality Demo
+</h2>
+<br>
+<h3>Register for an Account</h3>
+<img class="p-2" src="{% static 'Register.PNG' %}" style="width: 90%">
+<br>
+<h3>Or Login</h3>
+<img class="p-2" src="{% static 'Log In.PNG' %}" style="width: 90%">
+<br>
+<h3>Search For Happy Hours</h3>
+<img class="p-2" src="{% static 'Search.PNG' %}" style="width: 90%">
+<br>
+<h3>See Results</h3>
+<img class="p-2" src="{% static 'Results.PNG' %}" style="width: 90%">
+<br>
+<h3>Manage Your Bars</h3>
+<img class="p-2" src="{% static 'Manage.PNG' %}" style="width: 90%">
+<br>
+<h3>Add a New Bar</h3>
+<img class="p-2" src="{% static 'Create Bar.PNG' %}" style="width: 90%">
+<br>
+<h3>Then add a New Happy Hour</h3>
+<img class="p-2" src="{% static 'Create HH.PNG' %}" style="width: 90%">
+<br>
+<h3>See Your Bar's Happy Hours</h3>
+<img src="{% static 'View Your Happy Hours.PNG' %}" style="width: 90%">
+<br>
+<h3>See Your Bar's Reviews</h3>
+<img class="p-2" src="{% static 'View Your Reviews.PNG' %}" style="width: 90%">
+<br>
+<h3>Go Look at Other Bars</h3>
+<img class="p-2" src="{% static 'All.PNG' %}" style="width: 90%">
+<br>
+<h3>See Their Happy Hours</h3>
+<img class="p-2" src="{% static 'View Other Bar Happy Hours.PNG' %}" style="width: 90%">
+<br>
+<h3>See Their Reviews</h3>
+<img class="p-2" src="{% static 'Reviews.PNG' %}" style="width: 90%">
+<br>
+<h3>And Create a Review For Them</h3>
+<img class="p-2" src="{% static 'Create Review.PNG' %}" style="width: 90%">
+<br>
+<h1>So what are you waiting for? Happy Houring ;)</h1>
+</div>
+</div>
+{% endblock %}
