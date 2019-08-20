@@ -46,6 +46,13 @@
             android:id="@+id/create_review_button"/>
 
     <Button
+            android:text="Create a Bar"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/add_bar_button"/>
+
+    <Button
             android:text="See All Bars"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
