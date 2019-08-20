@@ -284,7 +284,7 @@ def display_bars_reviews(request, bar_id):
 	return render(request, 'hh_app/display_bar_reviews.html', {'bar': bar_obj, 'reviews': bar_obj.reviews_set.all()})
 
 def display_all_bars(request):
-	return render(request, 'hh_app/display_all_bars.html', {'bars': Bar.objects.all()})
+	return render(request, 'hh_app/display_all_bars.html', {'bars': Bar.objects.filter(approved = True).all()})
 
 
 

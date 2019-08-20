@@ -73,6 +73,32 @@ class MyOkHttpRequest(client: OkHttpClient) : AnkoLogger {
 
         return bodystr
     }
+    fun DELETE(url: String): String? {
+        var request : Request
+
+        if (user_token!="") {
+            info("has user token")
+            request = Request.Builder()
+                .url(url).delete()
+                .addHeader("Authorization", "Token $user_token")
+//                .addHeader("content-type", "application/json")
+                .build()
+        }else{
+            info("no user token")
+            info(url)
+            request = Request.Builder()
+                .url(url).delete()
+                .build()
+        }
+        println(request.toString())
+        println(url)
+        val response = client.newCall(request).execute()
+        println(response)
+        val bodystr = response.body()?.string()
+        println(bodystr)
+        return bodystr
+    }
+
 
     companion object {
         val JSON = MediaType.parse("application/json; charset=utf-8")

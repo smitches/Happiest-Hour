@@ -170,6 +170,26 @@ class BarHappyHoursCreateView(generics.ListCreateAPIView):
 			raise PermissionDenied
 		serializer.save(bar = Bar.objects.get(id=bar_id))
 
+@api_view(["GET"])
+def deleteBar(request, pk):
+	bar = Bar.objects.get(id=pk)
+	bar.delete()
+	return response.Response({"hello":"world"})
+	
+
+@api_view(["GET"])
+def deleteHappyHour(request, pk):
+	hh = HappyHour.objects.get(id=pk)
+	hh.delete()
+	return response.Response({"hello":"world"})
+
+
+@api_view(["GET"])
+def deleteReview(request, pk):
+	review = Review.objects.get(id=pk)
+	review.delete()
+	return response.Response({"hello":"world"})
+
 
 @api_view(['GET','POST'])
 def happyhour_search(request):

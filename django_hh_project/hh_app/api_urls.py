@@ -26,6 +26,10 @@ urlpatterns = [
     path('bars/create/',BarListCreateView.as_view()),
     path('bar/<int:bar_id>/happyhours/create',BarHappyHoursCreateView.as_view()),
 
+    path('bar/<int:pk>/delete/',deleteBar),
+    path('happy_hour/<int:pk>/delete/',deleteHappyHour),
+    path('review/<int:pk>/delete/',deleteReview),
+
     #GET only
     path('bar/<int:bar_id>/reviews/',BarReviewsView.as_view()),
     #GET list or POST a new happy hour (checks to make sure you are Manager first)
