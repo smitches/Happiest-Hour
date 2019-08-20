@@ -55,8 +55,13 @@ class GuestLandingPageFragement(): Fragment() {
 
                 (activity as NavigationHost).navigateTo(ManageBarsFragment(),addToBackstack = true)
             }
+
             view.create_review_button.setOnClickListener {
                 (activity as NavigationHost).navigateTo(AddReviewFragment(),addToBackstack = true)
+            }
+
+            view.add_bar_button.setOnClickListener {
+                (activity as NavigationHost).navigateTo(AddBarFragment(),addToBackstack = true)
             }
             return view
         }else{

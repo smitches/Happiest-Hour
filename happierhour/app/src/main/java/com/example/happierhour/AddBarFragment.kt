@@ -11,6 +11,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import android.R.string
 import android.widget.ArrayAdapter
+import com.example.happierhour.MyApplication.Companion.bar_id
 import kotlinx.android.synthetic.main.filter_hhs.*
 import okhttp3.*
 import org.jetbrains.anko.*
@@ -36,10 +37,10 @@ class AddBarFragment : Fragment() {
             uiThread {
                 val region_names: ArrayList<String> = ArrayList()
                 region_names.add("")
-                for (i in 0..(jsonarray.length() - 1)) {
+                for (i in 0 until jsonarray.length() ) {
                     val region = jsonarray.getJSONObject(i)
                     region_names.add(region.get("region_name").toString())
-                    RegionNameToId.put(region.get("bar_name").toString(), region.get("id").toString())
+                    RegionNameToId.put(region.get("region_name").toString(), region.get("id").toString())
                 }
 
                 val adapter =
@@ -50,13 +51,14 @@ class AddBarFragment : Fragment() {
         }
 
         doAsync {
-            val response = getRegions()
+            val response = getFeatures()
             println(response.toString())
             val jsonarray = JSONArray(response)
             uiThread {
-                val feature_names: ArrayList<String> = ArrayList()
+
+                val feature_names = ArrayList<String>()
                 feature_names.add("")
-                for (i in 0..(jsonarray.length() - 1)) {
+                for (i in 0 until jsonarray.length()) {
                     val feature = jsonarray.getJSONObject(i)
                     feature_names.add(feature.get("feature_title").toString())
                     FeatureNameToId.put(feature.get("feature_title").toString(), feature.get("id").toString())
@@ -83,20 +85,22 @@ class AddBarFragment : Fragment() {
             contents.put("street_address", addressInput)
             contents.put("phone_number", phoneInput)
             contents.put("region", RegionNameToId.get(selectedRegion).toString())
-            val featureId = FeatureNameToId.get(selectedRegion).toString()
-            contents.put("features", "[{\"feature_id\":\"$featureId\"}]")
+
+            if (selectedFeature != "") {
+                val featureId = FeatureNameToId.get(selectedFeature).toString()
+                contents.put("features", "[{\"feature_id\":\"$featureId\"}]")
+            }
 
 
             doAsync {
 
+                println(contents)
                 val postresponse = addInfo(contents)
 
-                uiThread {
-
-                    (activity as NavigationHost).navigateTo(ManageBarsFragment(), addToBackstack = false)
-
-                }
             }
+
+            println("on to creating a hh")
+            (activity as NavigationHost).navigateTo(AddHHFragment(), addToBackstack = false)
 
         }
 
@@ -108,13 +112,13 @@ class AddBarFragment : Fragment() {
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
 
-        val url = "https://happierhour.appspot.com/api/reviews/create/"
+        val url = "http://happierhour.appspot.com/api/bars/create/"
 
         val response_body = request.POST(url, contents)
 
         println(response_body)
-
-        return request.POST(url, contents)
+        bar_id = getBarFromJSONObject(JSONObject(response_body)).id_input.toInt()
+        return response_body
 
     }
 
