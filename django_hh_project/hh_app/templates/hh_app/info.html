@@ -1,0 +1,43 @@
+{%extends 'hh_app/base.html'%}
+
+{% block content %}
+
+<h3>HOW TO USE THE ANDROID APP</h3>
+<p>Download the application <a herf="http://happierhour.appspot.com/look/app-release.apk">HERE!</a></p>
+
+<p>First download the Android app and install it on your phone.<br><br>
+	1. You will first encouter the login screen where you can sign up, enter the app as a guest, or login with your with login credientals.<br>
+
+	{% load static %}
+	<img src="{% static "images/login.png" %}" style="width:200px;height:300px;">
+	<img src="{% static "images/register.png" %}" style="width:200px;height:300px;">
+	<br><br>
+	
+	2. If you enter as a guest, you will be able to search for a happy hour or see all bars in the app.<br>
+	{% load static %}
+	<img src="{% static "images/guest_dashboard.png" %}" style="width:200px;height:300px;"><br><br>
+		a. Fill out the happy hour filter form, to set specific criteria you are looking form. Press submit and scroll through the happy hours that meet your criteria. <br>
+		{% load static %}
+		<img src="{% static "images/filter_hhs.png" %}" style="width:200px;height:300px;"><br><br>
+		b. Or click on see all bars to find your happy hour by viewing the different bars. <br>
+		{% load static %}
+		<img src="{% static "images/see_bars.png" %}" style="width:200px;height:300px;"><br><br>
+	3. If you enter as a user with login credientals, there are more features in the app that come available. Use the main dashboard to manage bars and happy hours that you oversee or create a review about a bar you visited. <br>
+	{% load static %}
+	<img src="{% static "images/user_dashboard.png" %}" style="width:200px;height:300px;">
+	<img src="{% static "images/create_bar.png" %}" style="width:200px;height:300px;">
+	<img src="{% static "images/create_review.png" %}" style="width:200px;height:300px;">
+	<br><br>
+	
+	4. When you click on 'Manage My Bars', you will see a list of your bars. Once you click on a bar you will see a few options where you can see reviews, see the happy hour menu associated with the bar, see and add happy hours associated with the bars, or delete the bar. <br>
+	{% load static %}
+	<img src="{% static "images/your_bars.png" %}" style="width:200px;height:300px;">
+
+	<br><br>
+
+	5. To logout of the app, use the 'Logout' button on the user dashboard. <br>
+
+</p>
+
+
+{% endblock %}

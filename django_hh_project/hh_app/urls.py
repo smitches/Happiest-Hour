@@ -29,5 +29,7 @@ urlpatterns = [
 	path('reviews/history/',MyReviewsDisplay.as_view(), name='my_reviews'),
 	path('happy_hours/<int:pk>/delete', HappyHourDelete.as_view(), name='hh_delete'),
 	path('bars/<int:pk>/delete', BarDelete.as_view(), name='bar_delete'),
-	path('reviews/<int:pk>/delete', ReviewDelete.as_view(), name='review_delete')
+	path('reviews/<int:pk>/delete', ReviewDelete.as_view(), name='review_delete'),
+	path('info/', project_info, name='project_info'),
+	path('about/', project_about, name='project_about')
 ]
