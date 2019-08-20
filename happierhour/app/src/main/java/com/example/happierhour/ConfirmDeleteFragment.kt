@@ -43,7 +43,7 @@ class ConfirmDeleteFragment : Fragment(), AnkoLogger {
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
 
-        val url = "http://happierhour.appspot.com/api/happyhour/$hh_id/delete/"
+        val url = "http://happierhour.appspot.com/api/happy_hour/$hh_id/delete/"
 
         val response_body = JSONObject(request.DELETE(url))
 

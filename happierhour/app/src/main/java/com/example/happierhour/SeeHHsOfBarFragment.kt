@@ -28,12 +28,14 @@ class SeeHHsOfBarFragment : Fragment() {
 
             val gotresponse = fetchHHs()
             val jsonarray = JSONArray(gotresponse)
-
+            println(13)
             uiThread {
-
+                println(14)
                 var adapter: MyHHAdapter? = null
+                println(15)
                 var List: ArrayList<HH_Model>
                 List = generateHappyHourData(jsonarray)
+                println(16)
 
                 adapter = MyHHAdapter(requireActivity(), List)
 
@@ -64,8 +66,8 @@ class SeeHHsOfBarFragment : Fragment() {
         val client = OkHttpClient()
         val request = MyOkHttpRequest(client)
 
-        val url = "http://happierhour.appspot.com/api/bars/$bar_id/happyhours/"
-
+        val url = "http://happierhour.appspot.com/api/bar/$bar_id/happyhours/"
+        println("a")
         return request.GET(url)
 
     }

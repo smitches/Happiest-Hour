@@ -68,9 +68,10 @@ class MyOkHttpRequest(client: OkHttpClient) : AnkoLogger {
                 .build()
         }
         val response = client.newCall(request).execute()
-
+        println(url)
+        println("about to call")
         val bodystr = response.body()?.string()
-
+        println("body"+ bodystr)
         return bodystr
     }
     fun DELETE(url: String): String? {
