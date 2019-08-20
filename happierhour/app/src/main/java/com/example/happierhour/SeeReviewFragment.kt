@@ -11,7 +11,9 @@ import kotlinx.android.synthetic.main.display_reviews.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import android.R.string
+import com.example.happierhour.MyApplication.Companion.review_id
 import kotlinx.android.synthetic.main.display_reviews.my_review_list
+import kotlinx.android.synthetic.main.hhs_filtered.view.*
 import okhttp3.*
 import org.jetbrains.anko.*
 import org.json.JSONException
@@ -51,6 +53,14 @@ class SeeReviewFragment : Fragment(), AnkoLogger {
                 println(adapter == null)
 
                 view.my_review_list.adapter = adapter
+
+                view.my_review_list.setOnItemClickListener { adapterView, view, i, l ->
+
+                    review_id = reviewList.get(i).r_id.toInt()
+
+                    (activity as NavigationHost).navigateTo(ReviewDeleteFragment(),addToBackstack = true)
+
+                }
 
             }
         }

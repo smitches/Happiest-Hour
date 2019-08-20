@@ -8,6 +8,7 @@ class MyApplication : Application() {
         var filtered_hhs: String? = ""
         var bar_id: Int = 0
         var user = User_Model("","","","","")
+        var review_id: Int = 0
     }
 
 }
