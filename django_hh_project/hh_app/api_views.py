@@ -172,23 +172,23 @@ class BarHappyHoursCreateView(generics.ListCreateAPIView):
 
 @api_view(["GET"])
 def deleteBar(request, pk):
-	bar = Bar.objects.get(id=pk)
-	bar.delete()
-	return response.Response({"hello":"world"})
-	
+	bar = Bar.objects.get(pk=pk)
+	resp = bar.delete()
+	return response.Response({"response":str(resp)})
+
 
 @api_view(["GET"])
 def deleteHappyHour(request, pk):
-	hh = HappyHour.objects.get(id=pk)
-	hh.delete()
-	return response.Response({"hello":"world"})
+	hh = HappyHour.objects.get(pk=pk)
+	resp = hh.delete()
+	return response.Response({"response":str(resp)})
 
 
 @api_view(["GET"])
 def deleteReview(request, pk):
-	review = Review.objects.get(id=pk)
-	review.delete()
-	return response.Response({"hello":"world"})
+	review = Review.objects.get(pk=pk)
+	resp = review.delete()
+	return response.Response({"response":str(resp)})
 
 
 @api_view(['GET','POST'])
