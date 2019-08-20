@@ -286,16 +286,8 @@ def display_bars_reviews(request, bar_id):
 def display_all_bars(request):
 	return render(request, 'hh_app/display_all_bars.html', {'bars': Bar.objects.filter(approved = True).all()})
 
-def getInfo(request):
-	return render(request,'hh_app/my_info.html')
+def project_info(request): 
+	return render(request, template_name = "hh_app/info.html")
 
-
-
-
-
-
-
-
-
-
-
+def project_about(request):
+	return render(request, template_name = "hh_app/about.html")

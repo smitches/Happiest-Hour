@@ -1,0 +1,169 @@
+{%extends 'hh_app/base.html'%}
+
+{% load static %}
+
+{% block info %}
+<div class="p-2">
+	
+<h1>About Our App!</h3>
+<br>
+
+<h2>Happier Hour - A Narrative</h2>
+<p>	
+	We are in a rigorous MS program at the University of Texas at Austin. The MS in IT & Management program in 
+	the McCombs School of Business is heavily interested in the full development of their students to begin successful
+	careers. We achieve this by emphasizing the business context without losing focus on the technical knowledge 
+	necessary to contribute in the tech industry.
+	<br><br>
+	So begin the 2019 Summer Semester. Here's what we know about the Advanced Programming and Application Development
+	course:
+	<ul>
+		<li>
+			The semester is 6 weeks long
+		</li>
+		<li>
+			Learn Several Concepts
+		</li>
+		<ol>
+			<li>Python Programming (for students who have not been exposed)</li>
+			<li>Git version control for paired programming project</li>
+			<li>Database Concepts</li>
+			<li>Client-Server Architecture</li>
+			<li>Security, Authorization, Permissions</li>
+			<li>Web Application Development</li>
+			<li>Deployment on Google Cloud Platform</li>
+			<li>API Concepts</li>
+			<li>Android App Development</li>
+		</ol>
+		<li>Determine an Application to Develop</li>
+		<li>
+			Create a Web App using Python's Django framework
+		</li>
+		<ol>
+			<li>
+				Expose API's on this Web App
+			</li>
+			<li>Deploy it on Google App Engine, such that it can be accessed via <a href="happierhour.appspot.com">happierhour.appspot.com</a></li>
+			<li>Support file management system and implement connection with Google Storage</li>
+		</ol>
+		<li>
+			Develop an Android app in Kotlin
+		</li>
+		<ol>
+			<li>Connect it to the API's</li>
+			<li>Utilize Token Authentication</li>
+			<li>Support Main Functionality of the WebApp in a Mobile Native App</li>
+			<li>Deploy the APK to be downloaded by the public <a href="http://happierhour.appspot.com/look/app-release.apk">Click Here to Download</a></li>
+		</ol>
+		<li>Finish on time!</li>
+	</ul>
+	<br>
+	<h3>
+		But We Care About Our App!
+	</h3>
+	Our idea was too great. Yelp is too restaurant friendly and old. Google Maps is solving too many problems
+	in one app and cannot tailor the experience extremely well for a niche purpose. We are young professionals
+	who care about making sure we find the best drinks and the best food deals at Happy Hours near us! We want
+	a better way to search for, and filter through bars and restaurants that have Happy Hour deals.
+	<br>
+	<br>
+	Our platform is the key to having the Happiest Happy Hours
+	<br>
+	<br>
+	You can access our <a href="github.com/smitches/happiesthour">Github Repository</a> or visit our 
+	<a href="happierhour.appspot.com">web application</a>. And if you have an Android Phone, please download
+	our <a href="happierhour.appspot.com/look/app-release.apk">APK file</a> to test out our functionality.
+</p>
+
+<br>
+<br>
+<div class="ourcontent">
+<h1>
+	WebApp functionality Demo
+</h1>
+<br>
+<h3>1. Register for an Account</h3>
+<img class="p-2" src="{% static 'Register.PNG' %}" style="width: 90%">
+<br>
+<h3>(Or Login)</h3>
+<img class="p-2" src="{% static 'Log In.PNG' %}" style="width: 90%">
+<br>
+<h3>2. Search For Happy Hours</h3>
+<img class="p-2" src="{% static 'Search.PNG' %}" style="width: 90%">
+<br>
+<h3>3. See Results</h3>
+<img class="p-2" src="{% static 'Results.PNG' %}" style="width: 90%">
+<br>
+<h3>4. Manage Your Bars</h3>
+<img class="p-2" src="{% static 'Manage.PNG' %}" style="width: 90%">
+<br>
+<h3>5. Add a New Bar</h3>
+<img class="p-2" src="{% static 'Create Bar.PNG' %}" style="width: 90%">
+<br>
+<h3>6. Then add a New Happy Hour</h3>
+<img class="p-2" src="{% static 'Create HH.PNG' %}" style="width: 90%">
+<br>
+<h3>7. See Your Bar's Happy Hours</h3>
+<img src="{% static 'View Your Happy Hours.PNG' %}" style="width: 90%">
+<br>
+<h3>8. See Your Bar's Reviews</h3>
+<img class="p-2" src="{% static 'View Your Reviews.PNG' %}" style="width: 90%">
+<br>
+<h3>9. Go Look at Other Bars</h3>
+<img class="p-2" src="{% static 'All.PNG' %}" style="width: 90%">
+<br>
+<h3>10. See Their Happy Hours</h3>
+<img class="p-2" src="{% static 'View Other Bar Happy Hours.PNG' %}" style="width: 90%">
+<br>
+<h3>11. See Their Reviews</h3>
+<img class="p-2" src="{% static 'Reviews.PNG' %}" style="width: 90%">
+<br>
+<h3>12. And Create a Review For Them</h3>
+<img class="p-2" src="{% static 'Create Review.PNG' %}" style="width: 90%">
+<br>
+<h2>So what are you waiting for? Happy Houring ;)</h2>
+</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<br>
+<h1>HOW TO USE THE ANDROID APP</h1>
+<p>Download the application <a herf="http://happierhour.appspot.com/look/app-release.apk">HERE!</a></p>
+
+<p>First download the Android app and install it on your phone.<br><br>
+	1. You will first encouter the login screen where you can sign up, enter the app as a guest, or login with your with login credientals.<br>
+
+	{% load static %}
+	<img src="{% static "images/login.png" %}" style="width:200px;height:300px;">
+	<img src="{% static "images/register.png" %}" style="width:200px;height:300px;">
+	<br><br>
+	
+	2. If you enter as a guest, you will be able to search for a happy hour or see all bars in the app.<br>
+	{% load static %}
+	<img src="{% static "images/guest_dashboard.png" %}" style="width:200px;height:300px;"><br><br>
+		a. Fill out the happy hour filter form, to set specific criteria you are looking form. Press submit and scroll through the happy hours that meet your criteria. <br>
+		{% load static %}
+		<img src="{% static "images/filter_hhs.png" %}" style="width:200px;height:300px;"><br><br>
+		b. Or click on see all bars to find your happy hour by viewing the different bars. <br>
+		{% load static %}
+		<img src="{% static "images/see_bars.png" %}" style="width:200px;height:300px;"><br><br>
+	3. If you enter as a user with login credientals, there are more features in the app that come available. Use the main dashboard to manage bars and happy hours that you oversee or create a review about a bar you visited. <br>
+	{% load static %}
+	<img src="{% static "images/user_dashboard.png" %}" style="width:200px;height:300px;">
+	<img src="{% static "images/create_bar.png" %}" style="width:200px;height:300px;">
+	<img src="{% static "images/create_review.png" %}" style="width:200px;height:300px;">
+	<br><br>
+	
+	4. When you click on 'Manage My Bars', you will see a list of your bars. Once you click on a bar you will see a few options where you can see reviews, see the happy hour menu associated with the bar, see and add happy hours associated with the bars, or delete the bar. <br>
+	{% load static %}
+	<img src="{% static "images/your_bars.png" %}" style="width:200px;height:300px;">
+
+	<br><br>
+
+	5. To logout of the app, use the 'Logout' button on the user dashboard. <br>
+
+</p>
+
+
+{% endblock %}

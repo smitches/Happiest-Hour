@@ -44,16 +44,23 @@
           <a class="nav-link" href="{% url 'hh_app:login' %}">Login</a>
         </li>
       {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'hh_app:project_info' %}">Project Info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'hh_app:project_about' %}">About US</a>
+      </li>
     </ul>
   </div>
 </nav>
+
+{%block info%}
+{%endblock%}
 
 <div class="ourcontent">
   {% block content%}
   {% endblock %}
 </div>
-{%block info%}
-{%endblock%}
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
